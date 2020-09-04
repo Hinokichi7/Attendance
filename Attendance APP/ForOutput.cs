@@ -127,7 +127,6 @@ namespace Attendance_APP
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.day1 = comboBox3.SelectedItem as int?;
-            Console.WriteLine($"{this.year1}, {this.month1}, {this.day1}");
         }
 
         private void comboBox4_DropDownOpend(object sender, EventArgs e)
@@ -157,7 +156,6 @@ namespace Attendance_APP
         private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.day2 = comboBox6.SelectedItem as int?;
-            Console.WriteLine($"{this.year2}, {this.month2}, {this.day2}");
         }
 
 
