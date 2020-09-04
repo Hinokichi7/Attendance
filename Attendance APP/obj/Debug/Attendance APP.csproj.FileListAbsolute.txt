@@ -1,0 +1,12 @@
+C:\Users\user\source\repos\Attendance APP\Attendance APP\bin\Debug\Attendance APP.exe.config
+C:\Users\user\source\repos\Attendance APP\Attendance APP\bin\Debug\Attendance APP.exe
+C:\Users\user\source\repos\Attendance APP\Attendance APP\bin\Debug\Attendance APP.pdb
+C:\Users\user\source\repos\Attendance APP\Attendance APP\obj\Debug\Attendance APP.csprojAssemblyReference.cache
+C:\Users\user\source\repos\Attendance APP\Attendance APP\obj\Debug\Attendance_APP.Properties.Resources.resources
+C:\Users\user\source\repos\Attendance APP\Attendance APP\obj\Debug\Attendance APP.csproj.GenerateResource.cache
+C:\Users\user\source\repos\Attendance APP\Attendance APP\obj\Debug\Attendance APP.exe
+C:\Users\user\source\repos\Attendance APP\Attendance APP\obj\Debug\Attendance APP.pdb
+C:\Users\user\source\repos\Attendance APP\Attendance APP\obj\Debug\Attendance_APP.Menu.resources
+C:\Users\user\source\repos\Attendance APP\Attendance APP\obj\Debug\Attendance_APP.Stamping.resources
+C:\Users\user\source\repos\Attendance APP\Attendance APP\obj\Debug\Attendance APP.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\Attendance APP\Attendance APP\obj\Debug\Attendance_APP.ForOutput.resources
