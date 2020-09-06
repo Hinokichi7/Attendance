@@ -55,16 +55,19 @@ namespace Attendance_APP
         //}
 
 
-        private void SetStampingDaysList(ComboBox cmb_Year, ComboBox cmb_Month, ComboBox cmb_Day)
+        private void setCmbBoxItem(ComboBox cmb_Year, ComboBox cmb_Month, ComboBox cmb_Day)
         {
-            Console.WriteLine("SetDAY");
-            if (cmb_Year.SelectedValue != null && cmb_Month.SelectedValue != null)
+            if (cmb_Year.SelectedValue != null && cmb_Month.SelectedItem != null)
             {
                 Console.WriteLine("notYearNullAndNotMonthNull");
                 cmb_Day.Items.Clear();
                 int selectedYear = (int)cmb_Year.SelectedValue;
-                int selectedMonth = (int)cmb_Month.SelectedValue;
+                int selectedMonth = (int)cmb_Month.SelectedItem;
                 var maxDay = DateTime.DaysInMonth(selectedYear, selectedMonth);
+                //for (var i = 1; i <= maxDay; i++)
+                //{
+                //    cmb_Day.Items.Add(i);
+                //}
                 setCmbBoxItem(cmb_Day, maxDay);
             }
         }
@@ -78,29 +81,29 @@ namespace Attendance_APP
 
         private void cmb_startYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.SetStampingDaysList(cmb_startYear, cmb_startMonth, cmb_startDay);
+            this.setCmbBoxItem(cmb_startYear, cmb_startMonth, cmb_startDay);
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.SetStampingDaysList(cmb_startYear, cmb_startMonth, cmb_startDay);
+            this.setCmbBoxItem(cmb_startYear, cmb_startMonth, cmb_startDay);
         }
 
         private void cmb_endYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.SetStampingDaysList(cmb_endYear, cmb_endMonth, cmb_endDay);
+            this.setCmbBoxItem(cmb_endYear, cmb_endMonth, cmb_endDay);
         }
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.SetStampingDaysList(cmb_endYear, cmb_endMonth, cmb_endDay);
+            this.setCmbBoxItem(cmb_endYear, cmb_endMonth, cmb_endDay);
         }
 
         private void outputCsv_Click(object sender, EventArgs e)
         {
-            if (cmb_startDay.SelectedValue != null && cmb_endDay.SelectedValue!= null)
+            if (cmb_startDay.SelectedItem != null && cmb_endDay.SelectedItem!= null)
             {
-            new OutputFile().SaveFileDialog((int)cmb_startYear.SelectedValue, (int)cmb_startMonth.SelectedValue, (int)cmb_startDay.SelectedValue, (int)cmb_endYear.SelectedValue, (int)cmb_endMonth.SelectedValue, (int)cmb_endDay.SelectedValue);
+            new OutputFile().SaveFileDialog((int)cmb_startYear.SelectedValue, (int)cmb_startMonth.SelectedItem, (int)cmb_startDay.SelectedItem, (int)cmb_endYear.SelectedValue, (int)cmb_endMonth.SelectedItem, (int)cmb_endDay.SelectedItem);
             }
             else
             {
