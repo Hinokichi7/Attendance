@@ -53,17 +53,17 @@ namespace Attendance_APP
         //    }
         //}
 
-        private void setCmbBoxItem(ComboBox cmb_Year, ComboBox cmb_Month, ComboBox cmb_Day)
+        private void setCmbBoxItem(ComboBox cmb_year, ComboBox cmb_month, ComboBox cmb_day)
         {
-            if (cmb_Year.SelectedValue != null && cmb_Month.SelectedItem != null)
+            if (cmb_year.SelectedValue != null && cmb_month.SelectedItem != null)
             {
-                cmb_Day.Items.Clear();
-                var maxDay = DateTime.DaysInMonth((int)cmb_Year.SelectedValue, (int)cmb_Month.SelectedItem);
+                cmb_day.Items.Clear();
+                var maxDay = DateTime.DaysInMonth((int)cmb_year.SelectedValue, (int)cmb_month.SelectedItem);
                 //for (var i = 1; i <= maxDay; i++)
                 //{
                 //    cmb_Day.Items.Add(i);
                 //}
-                setCmbBoxItem(cmb_Day, maxDay);
+                setCmbBoxItem(cmb_day, maxDay);
             }
         }
 
@@ -96,7 +96,9 @@ namespace Attendance_APP
 
         private void outputCsv_Click(object sender, EventArgs e)
         {
-            if (cmb_startDay.SelectedItem != null && cmb_endDay.SelectedItem!= null)
+            var date1 = DateTime.Parse(string.Format($"{cmb_startYear.SelectedValue:d4}/{cmb_startMonth.SelectedItem:d2}/{cmb_startDay.SelectedItem:d2} 00:00:00"));
+            var date2 = DateTime.Parse(string.Format($"{cmb_endYear.SelectedValue:d4}/{cmb_endMonth.SelectedItem:d2}/{cmb_endDay.SelectedItem:d2} 00:00:00"));
+            if (date1 < date2)
             {
             new OutputFile().SaveFileDialog((int)cmb_startYear.SelectedValue, (int)cmb_startMonth.SelectedItem, (int)cmb_startDay.SelectedItem, (int)cmb_endYear.SelectedValue, (int)cmb_endMonth.SelectedItem, (int)cmb_endDay.SelectedItem);
             }
