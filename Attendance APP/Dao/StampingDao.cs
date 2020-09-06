@@ -148,7 +148,7 @@ namespace Attendance_APP.Dao
             }
         }
 
-        public List<StampingDto> GetTermStamping(int? year1, int? month1, int? day1, int? year2, int? month2, int? day2)
+        public List<StampingDto> GetTermStamping(int year1, int month1, int day1, int year2, int month2, int day2)
         {
             var dt = new DataTable();
             using (var conn = GetConnection())

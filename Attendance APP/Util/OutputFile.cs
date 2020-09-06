@@ -34,7 +34,7 @@ namespace Attendance_APP.Util
             }
         }
 
-        public void SaveFileDialog(int?year1, int? month1, int? day1, int? year2, int? month2, int? day2)
+        public void SaveFileDialog(int year1, int month1, int day1, int year2, int month2, int day2)
         {
             SaveFileDialog sfd = new SaveFileDialog();
 

@@ -1,169 +1,104 @@
 ﻿using Attendance_APP.Dao;
 using Attendance_APP.Dto;
+using Attendance_APP.Util;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Windows.Forms;
-using Attendance_APP.Util;
-using System.Globalization;
 
 namespace Attendance_APP
 {
     public partial class ForOutput : Form
     {
-        private List<StampingDto> yearsList1;
-        private List<StampingDto> monthList1;
-        private List<StampingDto> yearsList2;
-        private List<StampingDto> monthList2;
-
-        private List<StampingDto> resultSetYears;
-        private List<StampingDto> resultSetMonths;
-        private int maxDay;
-
-        public int? year1;
-        public int? month1;
-        public int? day1;
-        public int? year2;
-        public int? month2;
-        public int? day2;
-
         public ForOutput()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
-
-            comboBox1.Text = "年";
-            comboBox2.Text = "月";
-            comboBox3.Text = "日";
-            comboBox4.Text ="年";
-            comboBox5.Text = "月";
-            comboBox6.Text = "日";
+            this.initializeCmbBox();
         }
 
-
-        private void SetStampingYearList()
+        private void initializeCmbBox() 
         {
-            this.resultSetYears = new StampingDao().GetStampingYears();
+            this.setCmbBoxItem(cmb_startYear, new StampingDao().GetStampingYears(), "Year", "Year");
+            this.setCmbBoxItem(cmb_startMonth, 12);
+            //this.setCmbBoxItem(cmb_startMonth, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
+            cmb_startYear.SelectedIndex  = 0;
+            cmb_startMonth.SelectedIndex  = 0;
+
+            this.setCmbBoxItem(cmb_endYear, new StampingDao().GetStampingYears(), "Year", "Year");
+            this.setCmbBoxItem(cmb_endMonth, 12);
+            //this.setCmbBoxItem(cmb_endMonth, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
+            cmb_endYear.SelectedIndex = 0;
+            cmb_endMonth.SelectedIndex = 0;
         }
 
-        private void SetStampingMonthList(int? selectedYear)
+        private void setCmbBoxItem(ComboBox cmb, List<StampingDto> item, String DisplayMember, String ValueMember) 
         {
-            if (selectedYear != null)
+            cmb.DataSource = item;
+            cmb.ValueMember = ValueMember;
+            cmb.DisplayMember = DisplayMember;
+            Console.WriteLine(item.Count);  
+        }
+
+        private void setCmbBoxItem(ComboBox cmb, int max)
+        {
+            for (var i = 1; i <= max; i++)
             {
-                this.resultSetMonths = new StampingDao().GetStampingMonths(selectedYear);
+                cmb.Items.Add(i);
+            }
+        }
+        //private void setCmbBoxItem(ComboBox cmb, int[] items)
+        //{
+        //    foreach (var item in items)
+        //    {
+        //        cmb.Items.Add(item);
+        //    }
+        //}
+
+
+        private void SetStampingDaysList(ComboBox cmb)
+        {
+            Console.WriteLine("SetDAY");
+            if (cmb_startYear.SelectedValue != null && cmb_startMonth.SelectedValue != null)
+            {
+                cmb.Items.Clear();
+                Console.WriteLine("notYearNullAndNotMonthNull");
+                var maxDay = DateTime.DaysInMonth((int)cmb_startYear.SelectedValue, (int)cmb_startMonth.SelectedValue);
+                setCmbBoxItem(cmb, maxDay);
             }
         }
 
-        private void SetStampingDaysList(int? selectedYear, int? selectedMonth)
+        private void xxxxx()
         {
-            if (selectedMonth != null)
-            {
-                var sy = (int)selectedYear;
-                var sm = (int)selectedMonth;
-                this.maxDay = DateTime.DaysInMonth(sy, sm);
-            }
+            // 年度と月が選択されている事を確認する
+            // 年度と月の両方が選択されている場合、その年月の最大の日（月の終わりの日）を取得する
+            // 最大の日分の日付をcmbに追加する
         }
 
-        public void AddYearsListItem()
+        private void cmb_startYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            comboBox1.DataSource = yearsList1;
-            comboBox1.ValueMember = "Year";
-            comboBox1.DisplayMember = "Year";
-        }
-
-        public void AddYearsListItem2()
-        {
-            comboBox4.DataSource = yearsList2;
-            comboBox4.ValueMember = "Year";
-            comboBox4.DisplayMember = "Year";
-        }
-
-        public void AddMonthListItem()
-        {
-            comboBox2.DataSource = monthList1;
-            comboBox2.ValueMember = "Month";
-            comboBox2.DisplayMember = "Month";
-
-        }
-
-        public void AddMonthListItem2()
-        {
-            comboBox5.DataSource = monthList2;
-            comboBox5.ValueMember = "Month";
-            comboBox5.DisplayMember = "Month";
-        }
-
-        private void comboBox1_DropDownOpend(object sender, EventArgs e)
-        {
-            this.SetStampingYearList();
-            this.yearsList1 = this.resultSetYears;
-            this.AddYearsListItem();
-        }
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.year1 = comboBox1.SelectedValue as int?;
-            this.SetStampingMonthList(year1);
-            this.monthList1 = this.resultSetMonths;
-            this.AddMonthListItem();
+            this.SetStampingDaysList(cmb_startDay);
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            comboBox3.Items.Clear();
-            this.month1 = comboBox2.SelectedValue as int?;
-            this.SetStampingDaysList(year1, month1);
-            for (var i = 1; i <= this.maxDay; i++)
-            {
-                comboBox3.Items.Add(i);
-            }
+            this.SetStampingDaysList(cmb_startDay);
         }
 
-        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmb_endYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.day1 = comboBox3.SelectedItem as int?;
-        }
-
-        private void comboBox4_DropDownOpend(object sender, EventArgs e)
-        {
-            this.SetStampingYearList();
-            this.yearsList2 = this.resultSetYears;
-            this.AddYearsListItem2();
-        }
-        private void comboBox4_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            this.year2 = comboBox4.SelectedValue as int?;
-            this.SetStampingMonthList(year2);
-            this.monthList2 = this.resultSetMonths;
-            this.AddMonthListItem2();
+            this.SetStampingDaysList(cmb_endDay);
         }
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            comboBox6.Items.Clear();
-            this.month2 = comboBox5.SelectedValue as int?;
-            this.SetStampingDaysList(year2, month2);
-            for (var i = 1; i <= this.maxDay; i++)
-            {
-                comboBox6.Items.Add(i);
-            }
+            this.SetStampingDaysList(cmb_endDay);
         }
-        private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.day2 = comboBox6.SelectedItem as int?;
-        }
-
 
         private void outputCsv_Click(object sender, EventArgs e)
         {
-            if (year1 != null && month1 != null && day1 != null && year2 != null && month2 != null && day2 != null)
+            if (cmb_startDay.SelectedValue != null && cmb_endDay.SelectedValue!= null)
             {
-            new OutputFile().SaveFileDialog(year1, month1, day1, year2, month2, day2);
+            new OutputFile().SaveFileDialog((int)cmb_startYear.SelectedValue, (int)cmb_startMonth.SelectedValue, (int)cmb_startDay.SelectedValue, (int)cmb_endYear.SelectedValue, (int)cmb_endMonth.SelectedValue, (int)cmb_endDay.SelectedValue);
             }
             else
             {
