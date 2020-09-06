@@ -133,20 +133,20 @@ namespace Attendance_APP.Dao
             }
         }
 
-        public List<StampingDto> GetStampingMonths(int? selectedYear)
-        {
-            var dt = new DataTable();
-            using (var conn = GetConnection())
-            using (SqlCommand cmd = new SqlCommand("SELECT month FROM Attendance.dbo.Stamping WHERE year = @year GROUP BY month", conn))
-            {
-                cmd.Parameters.AddWithValue("@year", selectedYear);
+        //public List<StampingDto> GetStampingMonths(int? selectedYear)
+        //{
+        //    var dt = new DataTable();
+        //    using (var conn = GetConnection())
+        //    using (SqlCommand cmd = new SqlCommand("SELECT month FROM Attendance.dbo.Stamping WHERE year = @year GROUP BY month", conn))
+        //    {
+        //        cmd.Parameters.AddWithValue("@year", selectedYear);
 
-                conn.Open();
-                var adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(dt);
-                return this.SetStampingDto(dt);
-            }
-        }
+        //        conn.Open();
+        //        var adapter = new SqlDataAdapter(cmd);
+        //        adapter.Fill(dt);
+        //        return this.SetStampingDto(dt);
+        //    }
+        //}
 
         public List<StampingDto> GetTermStamping(int year1, int month1, int day1, int year2, int month2, int day2)
         {

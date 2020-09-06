@@ -55,15 +55,17 @@ namespace Attendance_APP
         //}
 
 
-        private void SetStampingDaysList(ComboBox cmb)
+        private void SetStampingDaysList(ComboBox cmb_Year, ComboBox cmb_Month, ComboBox cmb_Day)
         {
             Console.WriteLine("SetDAY");
-            if (cmb_startYear.SelectedValue != null && cmb_startMonth.SelectedValue != null)
+            if (cmb_Year.SelectedValue != null && cmb_Month.SelectedValue != null)
             {
-                cmb.Items.Clear();
                 Console.WriteLine("notYearNullAndNotMonthNull");
-                var maxDay = DateTime.DaysInMonth((int)cmb_startYear.SelectedValue, (int)cmb_startMonth.SelectedValue);
-                setCmbBoxItem(cmb, maxDay);
+                cmb_Day.Items.Clear();
+                int selectedYear = (int)cmb_Year.SelectedValue;
+                int selectedMonth = (int)cmb_Month.SelectedValue;
+                var maxDay = DateTime.DaysInMonth(selectedYear, selectedMonth);
+                setCmbBoxItem(cmb_Day, maxDay);
             }
         }
 
@@ -76,22 +78,22 @@ namespace Attendance_APP
 
         private void cmb_startYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.SetStampingDaysList(cmb_startDay);
+            this.SetStampingDaysList(cmb_startYear, cmb_startMonth, cmb_startDay);
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.SetStampingDaysList(cmb_startDay);
+            this.SetStampingDaysList(cmb_startYear, cmb_startMonth, cmb_startDay);
         }
 
         private void cmb_endYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.SetStampingDaysList(cmb_endDay);
+            this.SetStampingDaysList(cmb_endYear, cmb_endMonth, cmb_endDay);
         }
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.SetStampingDaysList(cmb_endDay);
+            this.SetStampingDaysList(cmb_endYear, cmb_endMonth, cmb_endDay);
         }
 
         private void outputCsv_Click(object sender, EventArgs e)
