@@ -27,8 +27,6 @@ namespace Attendance_APP
             this.setCmbBoxItem(cmb_endYear, new StampingDao().GetStampingYears(), "Year", "Year");
             this.setCmbBoxItem(cmb_endMonth, 12);
             //this.setCmbBoxItem(cmb_endMonth, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
-            cmb_endYear.SelectedIndex = 0;
-            cmb_endMonth.SelectedIndex = 0;
         }
 
         private void setCmbBoxItem(ComboBox cmb, List<StampingDto> item, String DisplayMember, String ValueMember) 
@@ -36,7 +34,7 @@ namespace Attendance_APP
             cmb.DataSource = item;
             cmb.ValueMember = ValueMember;
             cmb.DisplayMember = DisplayMember;
-            Console.WriteLine(item.Count);  
+            cmb.SelectedIndex = 0;
         }
 
         private void setCmbBoxItem(ComboBox cmb, int max)
@@ -45,6 +43,7 @@ namespace Attendance_APP
             {
                 cmb.Items.Add(i);
             }
+            cmb.SelectedIndex = 0;
         }
         //private void setCmbBoxItem(ComboBox cmb, int[] items)
         //{
@@ -53,7 +52,6 @@ namespace Attendance_APP
         //        cmb.Items.Add(item);
         //    }
         //}
-
 
         private void setCmbBoxItem(ComboBox cmb_Year, ComboBox cmb_Month, ComboBox cmb_Day)
         {
