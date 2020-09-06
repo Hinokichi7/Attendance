@@ -59,11 +59,8 @@ namespace Attendance_APP
         {
             if (cmb_Year.SelectedValue != null && cmb_Month.SelectedItem != null)
             {
-                Console.WriteLine("notYearNullAndNotMonthNull");
                 cmb_Day.Items.Clear();
-                int selectedYear = (int)cmb_Year.SelectedValue;
-                int selectedMonth = (int)cmb_Month.SelectedItem;
-                var maxDay = DateTime.DaysInMonth(selectedYear, selectedMonth);
+                var maxDay = DateTime.DaysInMonth((int)cmb_Year.SelectedValue, (int)cmb_Month.SelectedItem);
                 //for (var i = 1; i <= maxDay; i++)
                 //{
                 //    cmb_Day.Items.Add(i);
