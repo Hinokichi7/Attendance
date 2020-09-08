@@ -30,15 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label1 = new System.Windows.Forms.Label();
+            this.currentTime = new System.Windows.Forms.Label();
             this.stampBtn = new System.Windows.Forms.Button();
             this.TimeStamp = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.button1 = new System.Windows.Forms.Button();
+            this.cmb_stampingType = new System.Windows.Forms.ComboBox();
             this.employeeName = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.StampBtn2 = new System.Windows.Forms.Button();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -53,15 +52,15 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // label1
+            // currentTime
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("メイリオ", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label1.Location = new System.Drawing.Point(30, 118);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(200, 41);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Current time";
+            this.currentTime.AutoSize = true;
+            this.currentTime.Font = new System.Drawing.Font("メイリオ", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.currentTime.Location = new System.Drawing.Point(27, 120);
+            this.currentTime.Name = "currentTime";
+            this.currentTime.Size = new System.Drawing.Size(186, 41);
+            this.currentTime.TabIndex = 0;
+            this.currentTime.Text = "Current time";
             // 
             // stampBtn
             // 
@@ -79,12 +78,12 @@
             // TimeStamp
             // 
             this.TimeStamp.AutoSize = true;
-            this.TimeStamp.Font = new System.Drawing.Font("MS UI Gothic", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.TimeStamp.Location = new System.Drawing.Point(31, 203);
+            this.TimeStamp.Font = new System.Drawing.Font("メイリオ", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.TimeStamp.Location = new System.Drawing.Point(31, 184);
             this.TimeStamp.Name = "TimeStamp";
-            this.TimeStamp.Size = new System.Drawing.Size(95, 18);
+            this.TimeStamp.Size = new System.Drawing.Size(111, 36);
             this.TimeStamp.TabIndex = 3;
-            this.TimeStamp.Text = "Time stamp";
+            this.TimeStamp.Text = "打刻時間";
             // 
             // splitContainer1
             // 
@@ -94,10 +93,9 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.comboBox2);
-            this.splitContainer1.Panel1.Controls.Add(this.button1);
+            this.splitContainer1.Panel1.Controls.Add(this.cmb_stampingType);
             this.splitContainer1.Panel1.Controls.Add(this.employeeName);
-            this.splitContainer1.Panel1.Controls.Add(this.label1);
+            this.splitContainer1.Panel1.Controls.Add(this.currentTime);
             this.splitContainer1.Panel1.Controls.Add(this.TimeStamp);
             // 
             // splitContainer1.Panel2
@@ -107,23 +105,21 @@
             this.splitContainer1.SplitterDistance = 386;
             this.splitContainer1.TabIndex = 6;
             // 
-            // button1
+            // cmb_stampingType
             // 
-            this.button1.Location = new System.Drawing.Point(67, 288);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.cmb_stampingType.FormattingEnabled = true;
+            this.cmb_stampingType.Location = new System.Drawing.Point(56, 251);
+            this.cmb_stampingType.Name = "cmb_stampingType";
+            this.cmb_stampingType.Size = new System.Drawing.Size(121, 20);
+            this.cmb_stampingType.TabIndex = 5;
             // 
             // employeeName
             // 
             this.employeeName.AutoSize = true;
-            this.employeeName.Font = new System.Drawing.Font("メイリオ", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.employeeName.Location = new System.Drawing.Point(40, 58);
+            this.employeeName.Font = new System.Drawing.Font("メイリオ", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.employeeName.Location = new System.Drawing.Point(27, 58);
             this.employeeName.Name = "employeeName";
-            this.employeeName.Size = new System.Drawing.Size(157, 41);
+            this.employeeName.Size = new System.Drawing.Size(146, 41);
             this.employeeName.TabIndex = 0;
             this.employeeName.Text = "employee";
             // 
@@ -158,14 +154,6 @@
             this.StampBtn2.UseVisualStyleBackColor = false;
             this.StampBtn2.Click += new System.EventHandler(this.StampBtn2_Click);
             // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(56, 251);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 20);
-            this.comboBox2.TabIndex = 5;
-            // 
             // Stamping
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -191,14 +179,13 @@
         #endregion
 
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label currentTime;
         private System.Windows.Forms.Button stampBtn;
         private System.Windows.Forms.Label TimeStamp;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Button StampBtn2;
         private System.Windows.Forms.Label employeeName;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cmb_stampingType;
     }
 }

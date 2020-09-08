@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.Stamping = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmb_employee = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.End = new System.Windows.Forms.Button();
             this.openCsvOutput = new System.Windows.Forms.Button();
@@ -48,21 +48,21 @@
             this.Stamping.UseVisualStyleBackColor = true;
             this.Stamping.Click += new System.EventHandler(this.Stamping_Click);
             // 
-            // comboBox1
+            // cmb_employee
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox1.Font = new System.Drawing.Font("Meiryo UI", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(3, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(440, 50);
-            this.comboBox1.TabIndex = 4;
+            this.cmb_employee.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmb_employee.Font = new System.Drawing.Font("Meiryo UI", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.cmb_employee.FormattingEnabled = true;
+            this.cmb_employee.Location = new System.Drawing.Point(3, 3);
+            this.cmb_employee.Name = "cmb_employee";
+            this.cmb_employee.Size = new System.Drawing.Size(440, 50);
+            this.cmb_employee.TabIndex = 4;
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.comboBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cmb_employee, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.Stamping, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.End, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.openCsvOutput, 0, 3);
@@ -117,7 +117,7 @@
 
         #endregion
         private System.Windows.Forms.Button Stamping;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmb_employee;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button End;
         private System.Windows.Forms.Button openCsvOutput;

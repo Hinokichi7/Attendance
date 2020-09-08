@@ -12,13 +12,13 @@ namespace Attendance_APP.Dao
             var list = new List<EmployeeDto>();
             var dt = new DataTable();
             using (var conn = GetConnection())
-            using (var command = conn.CreateCommand())
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Employee", conn))
             {
                 conn.Open();
-                command.CommandText = @"SELECT * FROM Attendance.dbo.Employee";
-                var adapter = new SqlDataAdapter(command);
+                var adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
-                foreach(DataRow dr in dt.Rows) {
+                foreach (DataRow dr in dt.Rows)
+                {
                     var dto = new EmployeeDto
                     {
                         Code = int.Parse(dr["code"].ToString()),

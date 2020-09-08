@@ -18,18 +18,18 @@ namespace Attendance_APP
 
         private void initializeCmbBox() 
         {
-            this.setCmbBoxItem(cmb_startYear, new StampingDao().GetStampingYears(), "Year", "Year");
-            this.setCmbBoxItem(cmb_startMonth, 12);
+            this.SetCmbBoxItem(cmb_startYear, new StampingDao().GetStampingYears(), "Year", "Year");
+            this.SetCmbBoxItem(cmb_startMonth, 12);
             //this.setCmbBoxItem(cmb_startMonth, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
             cmb_startYear.SelectedIndex  = 0;
             cmb_startMonth.SelectedIndex  = 0;
 
-            this.setCmbBoxItem(cmb_endYear, new StampingDao().GetStampingYears(), "Year", "Year");
-            this.setCmbBoxItem(cmb_endMonth, 12);
+            this.SetCmbBoxItem(cmb_endYear, new StampingDao().GetStampingYears(), "Year", "Year");
+            this.SetCmbBoxItem(cmb_endMonth, 12);
             //this.setCmbBoxItem(cmb_endMonth, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
         }
 
-        private void setCmbBoxItem(ComboBox cmb, List<StampingDto> item, String DisplayMember, String ValueMember) 
+        private void SetCmbBoxItem(ComboBox cmb, List<StampingDto> item, String DisplayMember, String ValueMember) 
         {
             cmb.DataSource = item;
             cmb.ValueMember = ValueMember;
@@ -37,7 +37,7 @@ namespace Attendance_APP
             cmb.SelectedIndex = 0;
         }
 
-        private void setCmbBoxItem(ComboBox cmb, int max)
+        private void SetCmbBoxItem(ComboBox cmb, int max)
         {
             for (var i = 1; i <= max; i++)
             {
@@ -53,7 +53,7 @@ namespace Attendance_APP
         //    }
         //}
 
-        private void setCmbBoxItem(ComboBox cmb_year, ComboBox cmb_month, ComboBox cmb_day)
+        private void SetCmbBoxItem(ComboBox cmb_year, ComboBox cmb_month, ComboBox cmb_day)
         {
             if (cmb_year.SelectedValue != null && cmb_month.SelectedItem != null)
             {
@@ -63,7 +63,7 @@ namespace Attendance_APP
                 //{
                 //    cmb_Day.Items.Add(i);
                 //}
-                setCmbBoxItem(cmb_day, maxDay);
+                SetCmbBoxItem(cmb_day, maxDay);
             }
         }
 
@@ -76,31 +76,33 @@ namespace Attendance_APP
 
         private void cmb_startYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.setCmbBoxItem(cmb_startYear, cmb_startMonth, cmb_startDay);
+            this.SetCmbBoxItem(cmb_startYear, cmb_startMonth, cmb_startDay);
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.setCmbBoxItem(cmb_startYear, cmb_startMonth, cmb_startDay);
+            this.SetCmbBoxItem(cmb_startYear, cmb_startMonth, cmb_startDay);
         }
 
         private void cmb_endYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.setCmbBoxItem(cmb_endYear, cmb_endMonth, cmb_endDay);
+            this.SetCmbBoxItem(cmb_endYear, cmb_endMonth, cmb_endDay);
         }
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.setCmbBoxItem(cmb_endYear, cmb_endMonth, cmb_endDay);
+            this.SetCmbBoxItem(cmb_endYear, cmb_endMonth, cmb_endDay);
         }
 
         private void outputCsv_Click(object sender, EventArgs e)
         {
             var date1 = DateTime.Parse(string.Format($"{cmb_startYear.SelectedValue:d4}/{cmb_startMonth.SelectedItem:d2}/{cmb_startDay.SelectedItem:d2} 00:00:00"));
             var date2 = DateTime.Parse(string.Format($"{cmb_endYear.SelectedValue:d4}/{cmb_endMonth.SelectedItem:d2}/{cmb_endDay.SelectedItem:d2} 00:00:00"));
+            // 期間開始と終了が正しく選択できていれば保存
+            // (引数が数が多く長いのでまとめられないか)
             if (date1 < date2)
             {
-            new OutputFile().SaveFileDialog((int)cmb_startYear.SelectedValue, (int)cmb_startMonth.SelectedItem, (int)cmb_startDay.SelectedItem, (int)cmb_endYear.SelectedValue, (int)cmb_endMonth.SelectedItem, (int)cmb_endDay.SelectedItem);
+                new OutputFile().SaveFileDialog((int)cmb_startYear.SelectedValue, (int)cmb_startMonth.SelectedItem, (int)cmb_startDay.SelectedItem, (int)cmb_endYear.SelectedValue, (int)cmb_endMonth.SelectedItem, (int)cmb_endDay.SelectedItem);
             }
             else
             {

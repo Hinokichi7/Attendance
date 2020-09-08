@@ -14,23 +14,22 @@ namespace Attendance_APP
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.SetEmployList();
-            this.AddListItem();
+            // cmbに設定(社員データ)
+            this.SetEmployList(cmb_employee);
         }
 
-
-        private void AddListItem()
+        private void SetEmployList(ComboBox cmb)
         {
-            comboBox1.DataSource = list;
-            comboBox1.ValueMember = "Code";
-            comboBox1.DisplayMember = "Name";
-        }
-        private void SetEmployList() {
+            // 社員データを取得
             this.list = new EmployeeDao().GetAllEmployee();
+            // cmbに設定・表示
+            cmb.DataSource = this.list;
+            cmb.ValueMember = "Code";
+            cmb.DisplayMember = "Name";
         }
 
         private EmployeeDto GetSelectedEmployee() {
-            return list.Find(employee => employee.Code == int.Parse(comboBox1.SelectedValue.ToString()));
+            return this.list.Find(employee => employee.Code == int.Parse(cmb_employee.SelectedValue.ToString()));
         }
 
 

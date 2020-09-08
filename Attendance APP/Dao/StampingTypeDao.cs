@@ -12,11 +12,10 @@ namespace Attendance_APP.Dao
             var list = new List<StampingTypeDto>();
             var dt = new DataTable();
             using (var conn = GetConnection())
-            using (var command = conn.CreateCommand())
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Attendance.dbo.StampingType", conn))
             {
                 conn.Open();
-                command.CommandText = "SELECT * FROM Attendance.dbo.StampingType";
-                var adapter = new SqlDataAdapter(command);
+                var adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
                 foreach(DataRow dr in dt.Rows)
                 {
