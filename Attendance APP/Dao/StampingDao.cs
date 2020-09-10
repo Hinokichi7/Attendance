@@ -52,9 +52,25 @@ namespace Attendance_APP.Dao
             return list;
         }
 
+        public StampingDto GetLatestStamping(int employeeCode)
+        {
+            // 社員を指定して最新の打刻データを読み込み
+            var dt = new DataTable();
+            using (var conn = GetConnection())
+            using (var cmd = new SqlCommand("SELECT TOP 1 * FROM Attendance.dbo.Stamping WHERE employeeCode = @employeeCode ORDER BY id DESC", conn))
+            {
+                cmd.Parameters.AddWithValue("@employeeCode", employeeCode);
+
+                conn.Open();
+                var adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+                return this.SetStampingDto(dt)[0];
+            }
+        }
+
         public void AttendanceStamping(StampingDto dto)
         {
-            //出勤データを追加
+            // 社員コード、年月日、出勤時間、勤務種別を追加
             using (var conn = GetConnection())
             using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping(EmployeeCode, year, month, day, attendance, stampingCode) VALUES(@employeeCode,@year, @month, @day,@attendance,@stampingCode)", conn))
             {
@@ -74,27 +90,43 @@ namespace Attendance_APP.Dao
 
         public void LeavingWorkStamping(StampingDto dto)
         {
-            // 社員、日付を指定して退勤時刻、労働時間を更新
+            // 社員を指定して退勤時刻、労働時間を更新
             using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET leavingWork = @leavingWork, workingHours = @workingHours WHERE employeeCode = @employeeCode AND year = @year AND month = @month AND day= @day", conn))
+            using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET leavingWork = @leavingWork, workingHours = @workingHours WHERE employeeCode = @employeeCode AND workingHours IS NULL", conn))
             {
                 conn.Open();
 
+                cmd.Parameters.AddWithValue("@employeeCode", dto.EmployeeCode); ;
                 cmd.Parameters.AddWithValue("@leavingWork", dto.LeavingWork);
-                cmd.Parameters.AddWithValue("@employeeCode", dto.EmployeeCode);
-                cmd.Parameters.AddWithValue("@year", dto.Year);
-                cmd.Parameters.AddWithValue("@month", dto.Month);
-                cmd.Parameters.AddWithValue("@day", dto.Day);
                 cmd.Parameters.AddWithValue("@workingHours", dto.WorkingHours);
 
                 cmd.ExecuteNonQuery();
 
             }
         }
+        //public void LeavingWorkStamping(StampingDto dto)
+        //{
+        //    // 社員、日付を指定して退勤時刻、労働時間を更新
+        //    using (var conn = GetConnection())
+        //    using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET leavingWork = @leavingWork, workingHours = @workingHours WHERE employeeCode = @employeeCode AND year = @year AND month = @month AND day= @day", conn))
+        //    {
+        //        conn.Open();
+
+        //        cmd.Parameters.AddWithValue("@leavingWork", dto.LeavingWork);
+        //        cmd.Parameters.AddWithValue("@employeeCode", dto.EmployeeCode);
+        //        cmd.Parameters.AddWithValue("@year", dto.Year);
+        //        cmd.Parameters.AddWithValue("@month", dto.Month);
+        //        cmd.Parameters.AddWithValue("@day", dto.Day);
+        //        cmd.Parameters.AddWithValue("@workingHours", dto.WorkingHours);
+
+        //        cmd.ExecuteNonQuery();
+
+        //    }
+        //}
 
         public StampingDto GetAttendance(int employeeCode, int year, int month, int day)
         {
-            //社員、日付を指定して出勤データを読み込み
+            //社員、年月日からStampingテーブルの行データを指定して読み込み
             var dt = new DataTable();
             using (var conn = GetConnection())
             using (var cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Stamping WHERE employeeCode = @employeeCode AND year = @year AND month = @month AND day= @day", conn))
@@ -141,6 +173,7 @@ namespace Attendance_APP.Dao
 
         public List<StampingDto> GetTermStamping(int year1, int month1, int day1, int year2, int month2, int day2)
         {
+            //年月日１から年月日２の期間からStampingテーブルの行データを指定して読み込み
             var dt = new DataTable();
             using (var conn = GetConnection())
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Stamping WHERE year BETWEEN @year1 AND @year2 AND month BETWEEN @month1 AND @month2 AND day BETWEEN @day1 AND @day2", conn))
