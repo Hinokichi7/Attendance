@@ -13,10 +13,11 @@ namespace Attendance_APP
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.initializeCmbBox();
+            
+            this.InitializeCmbBox();
         }
 
-        private void initializeCmbBox() 
+        private void InitializeCmbBox() 
         {
             this.SetCmbBoxItem(cmb_startYear, new StampingDao().GetStampingYears(), "Year", "Year");
             this.SetCmbBoxItem(cmb_startMonth, 12);
@@ -79,7 +80,7 @@ namespace Attendance_APP
             this.SetCmbBoxItem(cmb_startYear, cmb_startMonth, cmb_startDay);
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmb_startMonth_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.SetCmbBoxItem(cmb_startYear, cmb_startMonth, cmb_startDay);
         }
@@ -89,7 +90,7 @@ namespace Attendance_APP
             this.SetCmbBoxItem(cmb_endYear, cmb_endMonth, cmb_endDay);
         }
 
-        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmb_emdMonth_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.SetCmbBoxItem(cmb_endYear, cmb_endMonth, cmb_endDay);
         }

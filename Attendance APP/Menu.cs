@@ -8,7 +8,7 @@ namespace Attendance_APP
 {
     public partial class Menu : Form
     {
-        private List<EmployeeDto> list;
+        private List<EmployeeDto> Tbl_employee { get; set; }
 
         public Menu()
         {
@@ -20,21 +20,22 @@ namespace Attendance_APP
 
         private void SetEmployList(ComboBox cmb)
         {
-            // 社員データを取得
-            this.list = new EmployeeDao().GetAllEmployee();
+            // 社員を取得
+            this.Tbl_employee = new EmployeeDao().GetAllEmployee();
             // cmbに設定・表示
-            cmb.DataSource = this.list;
+            cmb.DataSource = this.Tbl_employee;
             cmb.ValueMember = "Code";
             cmb.DisplayMember = "Name";
         }
 
         private EmployeeDto GetSelectedEmployee() {
-            return this.list.Find(employee => employee.Code == int.Parse(cmb_employee.SelectedValue.ToString()));
+            return this.Tbl_employee.Find(employee => employee.Code == int.Parse(cmb_employee.SelectedValue.ToString()));
         }
 
 
         private void Stamping_Click(object sender, EventArgs e)
         {
+            // 選択した社員ををStampingクラスへ渡す
             var employee = GetSelectedEmployee();
             var stamping = new Stamping(employee);
             stamping.ShowDialog(this);

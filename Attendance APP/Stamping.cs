@@ -10,12 +10,12 @@ namespace Attendance_APP
     {
         // Menuにて選択した社員①
         private readonly EmployeeDto employee;
-        // 社員①の最新の打刻データ②
-        private StampingDto latestStamping;
+        // 社員①の最新の打刻データ
+        private StampingDto LatestStamping { get; set; }
         // 打刻時間丸め設定
         private TimeSpan interval = TimeSpan.FromMinutes(30);
         // 勤務種別
-        private List<StampingTypeDto> list;
+        private List<StampingTypeDto> Tbl_stampimgType { get; set; }
 
         public Stamping(EmployeeDto employee)
         {
@@ -29,22 +29,33 @@ namespace Attendance_APP
             currentTime.Text = this.GetCurrentTime();
             employeeName.Text = this.employee.Name;
 
-            // ②より出勤打刻画面か退勤打刻画面か
+            // 打刻画面表示選択
             this.GetAttendanceOrLeaving();
             
         }
-        // 出勤打刻画面か退勤打刻画面か
+
         private void GetAttendanceOrLeaving()
         {
-            this.latestStamping = new StampingDao().GetLatestStamping(this.employee.Code);
-            // 退勤時間が押されている(初期値ではない)
-            if (latestStamping.LeavingWork != DateTime.Parse("0001/01/01 00:00:00"))
+            // 社員①の打刻データが既存か新規か
+            var exitsEmployee = new StampingDao().GetAllStamping().Find(employee => employee.EmployeeCode == this.employee.Code);
+            if (exitsEmployee != null)
             {
-                StampingAttendance();
+                // 既存の場合→最新のデータ読み込み
+                this.LatestStamping = new StampingDao().GetLatestStamping(this.employee.Code);
+                // 退勤時間が押されているかどうか(初期値の場合は押されていない)
+                if (LatestStamping.LeavingWork != DateTime.Parse("0001/01/01 00:00:00"))
+                {
+                    StampingAttendance();
+                }
+                else
+                {
+                    StampingLeaving();
+                }
             }
             else
             {
-                StampingLeaving();
+                // 新規の場合→出勤打刻画面
+                StampingAttendance();
             }
         }
 
@@ -52,9 +63,9 @@ namespace Attendance_APP
         private void StampingAttendance()
         {
             // 全勤務種別をStampingDaoより取得
-            this.list = new StampingTypeDao().GetAllStampingType();
+            this.Tbl_stampimgType = new StampingTypeDao().GetAllStampingType();
             // cmb_stampingTypeに設定・表示
-            cmb_stampingType.DataSource = this.list;
+            cmb_stampingType.DataSource = this.Tbl_stampimgType;
             cmb_stampingType.ValueMember = "StampingCode";
             cmb_stampingType.DisplayMember = "StampingName";
             // 退勤ボタン不可
@@ -66,7 +77,7 @@ namespace Attendance_APP
         {
             // cmb_stampingTypeに設定・表示
             var list = new StampingTypeDao().GetAllStampingType();
-            cmb_stampingType.Text = list.Find(stampingType => stampingType.StampingCode == this.latestStamping.StampingCode).StampingName;
+            cmb_stampingType.Text = list.Find(stampingType => stampingType.StampingCode == this.LatestStamping.StampingCode).StampingName;
             // 出勤ボタン不可
             stampBtn.Enabled = false;
         }
@@ -97,12 +108,12 @@ namespace Attendance_APP
             dto.Day = DateTime.Now.Day;
             dto.Attendance = DateTime.Now;
             dto.StampingCode = GetSelectedStampingType().StampingCode;
-            new StampingDao().AttendanceStamping(dto);
+            new StampingDao().AddStamping(dto);
         }
         // 勤務種別選択
         private StampingTypeDto GetSelectedStampingType()
         {
-            return this.list.Find(stampingType => stampingType.StampingCode == int.Parse(cmb_stampingType.SelectedValue.ToString()));
+            return this.Tbl_stampimgType.Find(stampingType => stampingType.StampingCode == int.Parse(cmb_stampingType.SelectedValue.ToString()));
         }
 
         // 退勤打刻ボタン
@@ -120,13 +131,13 @@ namespace Attendance_APP
 
 
             // 出勤時間、退勤時間を取得(丸め無し)
-            var startTime = GetStartTime(this.latestStamping.Attendance);
+            var startTime = GetStartTime(this.LatestStamping.Attendance);
             var endTime = GetEndTime(dto.LeavingWork);
             // ②より労働時間を取得
             dto.WorkingHours = HourDifference(startTime, endTime);
 
             // 退勤打刻データをStampingDaoへ
-            new StampingDao().LeavingWorkStamping(dto);
+            new StampingDao().UpdateStamping(dto);
         }
 
         //private void StampBtn2_Click(object sender, EventArgs e)

@@ -77,7 +77,7 @@
             this.cmb_startMonth.Name = "cmb_startMonth";
             this.cmb_startMonth.Size = new System.Drawing.Size(45, 20);
             this.cmb_startMonth.TabIndex = 4;
-            this.cmb_startMonth.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            this.cmb_startMonth.SelectedIndexChanged += new System.EventHandler(this.cmb_startMonth_SelectedIndexChanged);
             // 
             // cmb_startDay
             // 
@@ -103,7 +103,7 @@
             this.cmb_endMonth.Name = "cmb_endMonth";
             this.cmb_endMonth.Size = new System.Drawing.Size(45, 20);
             this.cmb_endMonth.TabIndex = 7;
-            this.cmb_endMonth.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
+            this.cmb_endMonth.SelectedIndexChanged += new System.EventHandler(this.cmb_emdMonth_SelectedIndexChanged);
             // 
             // cmb_endDay
             // 
