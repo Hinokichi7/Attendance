@@ -34,7 +34,7 @@ namespace Attendance_APP.Util
             }
         }
 
-        public void SaveFileDialog(int year1, int month1, int day1, int year2, int month2, int day2)
+        public void SaveFileDialog(string startPoint, string endPoint)
         {
             SaveFileDialog sfd = new SaveFileDialog();
 
@@ -50,7 +50,7 @@ namespace Attendance_APP.Util
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 //OKボタンがクリックされたとき、選択されたファイル名を表示する
-                var Stampinglists = new StampingDao().GetTermStamping(year1, month1, day1, year2, month2, day2);
+                var Stampinglists = new StampingDao().GetTermStamping(startPoint, endPoint);
                 Console.WriteLine($"{sfd.FileName}{Stampinglists}");
                 this.WriteCsv(sfd.FileName, false, Stampinglists);
             }

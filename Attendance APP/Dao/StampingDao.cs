@@ -14,6 +14,18 @@ namespace Attendance_APP.Dao
             foreach (DataRow dr in dt.Rows)
             {
                 var dto = new StampingDto();
+                if (dt.Columns.Contains("id"))
+                {
+                    dto.Id = int.Parse(dr["id"].ToString());
+                }
+                if (dt.Columns.Contains("createTime"))
+                {
+                    dto.CreateTime = DateTime.Parse(dr["createTime"].ToString());
+                }
+                if (dt.Columns.Contains("updateTime") && !String.IsNullOrEmpty(dr["updateTime"].ToString()))
+                {
+                    dto.UpdateTime = DateTime.Parse(dr["updateTime"].ToString());
+                }
                 if (dt.Columns.Contains("employeeCode"))
                 {
                     dto.EmployeeCode = int.Parse(dr["employeeCode"].ToString());
@@ -38,7 +50,7 @@ namespace Attendance_APP.Dao
                 {
                     dto.StampingCode = int.Parse(dr["stampingcode"].ToString());
                 }
-                    if (dt.Columns.Contains("leavingWork") && !String.IsNullOrEmpty(dr["leavingWork"].ToString()))
+                if (dt.Columns.Contains("leavingWork") && !String.IsNullOrEmpty(dr["leavingWork"].ToString()))
                 {
                     dto.LeavingWork = DateTime.Parse(dr["leavingWork"].ToString());
                 }
@@ -46,23 +58,27 @@ namespace Attendance_APP.Dao
                 {
                     dto.WorkingHours = double.Parse(dr["workingHours"].ToString());
                 }
+                if (dt.Columns.Contains("remark") && !String.IsNullOrEmpty(dr["remark"].ToString()))
+                {
+                    dto.Remark = dr["remark"].ToString();
+                }
                 list.Add(dto);
             }
             return list;
         }
 
-        public List<StampingDto> GetAllStamping()
-        {
-            var dt = new DataTable();
-            using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Stamping", conn))
-            {
-                conn.Open();
-                var adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(dt);
-                return this.SetStampingDto(dt);
-            }
-        }
+        //public List<StampingDto> GetAllStamping()
+        //{
+        //    var dt = new DataTable();
+        //    using (var conn = GetConnection())
+        //    using (var cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Stamping", conn))
+        //    {
+        //        conn.Open();
+        //        var adapter = new SqlDataAdapter(cmd);
+        //        adapter.Fill(dt);
+        //        return this.SetStampingDto(dt);
+        //    }
+        //}
 
         public StampingDto GetLatestStamping(int employeeCode)
         {
@@ -76,7 +92,14 @@ namespace Attendance_APP.Dao
                 conn.Open();
                 var adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
+                if (this.SetStampingDto(dt).Count != 0)
+                {
                 return this.SetStampingDto(dt)[0];
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -113,19 +136,16 @@ namespace Attendance_APP.Dao
             }
         }
 
-        public List<StampingDto> GetTermStamping(int year1, int month1, int day1, int year2, int month2, int day2)
+        public List<StampingDto> GetTermStamping(string startPoint, string endPoint)
         {
             //年月日１から年月日２の期間からStampingテーブルの行データを指定して読み込み
             var dt = new DataTable();
             using (var conn = GetConnection())
-            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Stamping WHERE year BETWEEN @year1 AND @year2 AND month BETWEEN @month1 AND @month2 AND day BETWEEN @day1 AND @day2", conn))
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Stamping WHERE attendance BETWEEN @startPoint AND @endPoint", conn))
+            //using (SqlCommand cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Stamping WHERE attendance >= startPoint AND attendance <= endPoint", conn))
             {
-                cmd.Parameters.AddWithValue("@year1", year1);
-                cmd.Parameters.AddWithValue("@month1", month1);
-                cmd.Parameters.AddWithValue("@day1", day1);
-                cmd.Parameters.AddWithValue("@year2", year2);
-                cmd.Parameters.AddWithValue("@month2", month2);
-                cmd.Parameters.AddWithValue("@day2", day2);
+                cmd.Parameters.AddWithValue("@startPoint", startPoint);
+                cmd.Parameters.AddWithValue("@endPoint", endPoint);
                 conn.Open();
                 var adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
@@ -137,16 +157,18 @@ namespace Attendance_APP.Dao
         {
             // 社員コード、年月日、出勤時間、勤務種別を追加
             using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping(EmployeeCode, year, month, day, attendance, stampingCode) VALUES(@employeeCode,@year, @month, @day,@attendance,@stampingCode)", conn))
+            using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping(createTime, employeeCode, year, month, day, attendance, stampingCode, remark) VALUES(@createTime, @employeeCode,@year, @month, @day,@attendance,@stampingCode, @remark)", conn))
             {
                 conn.Open();
 
+                cmd.Parameters.AddWithValue("@createTime", dto.CreateTime);
                 cmd.Parameters.AddWithValue("@employeeCode", dto.EmployeeCode);
                 cmd.Parameters.AddWithValue("@year", dto.Year);
                 cmd.Parameters.AddWithValue("@month", dto.Month);
                 cmd.Parameters.AddWithValue("@day", dto.Day);
                 cmd.Parameters.AddWithValue("@attendance", dto.Attendance);
                 cmd.Parameters.AddWithValue("@stampingCode", dto.StampingCode);
+                cmd.Parameters.AddWithValue("@remark", dto.Remark);
 
                 cmd.ExecuteNonQuery();
 
@@ -157,13 +179,15 @@ namespace Attendance_APP.Dao
         {
             // 社員を指定して退勤時刻、労働時間を更新
             using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET leavingWork = @leavingWork, workingHours = @workingHours WHERE employeeCode = @employeeCode AND leavingWork IS NULL", conn))
+            using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET updateTime = @updateTime, leavingWork = @leavingWork, workingHours = @workingHours, remark = @remark WHERE id = @id", conn))
             {
                 conn.Open();
 
-                cmd.Parameters.AddWithValue("@employeeCode", dto.EmployeeCode); ;
+                cmd.Parameters.AddWithValue("@id", dto.Id);
+                cmd.Parameters.AddWithValue("@updateTime", dto.UpdateTime);
                 cmd.Parameters.AddWithValue("@leavingWork", dto.LeavingWork);
                 cmd.Parameters.AddWithValue("@workingHours", dto.WorkingHours);
+                cmd.Parameters.AddWithValue("@remark", dto.Remark);
 
                 cmd.ExecuteNonQuery();
 

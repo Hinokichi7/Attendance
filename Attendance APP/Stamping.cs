@@ -37,13 +37,13 @@ namespace Attendance_APP
         private void GetAttendanceOrLeaving()
         {
             // 社員①の打刻データが既存か新規か
-            var exitsEmployee = new StampingDao().GetAllStamping().Find(employee => employee.EmployeeCode == this.Employee.Code);
-            if (exitsEmployee != null)
-            {
+            //var exitsEmployee = new StampingDao().GetAllStamping().Find(employee => employee.EmployeeCode == this.Employee.Code);
+            //if (exitsEmployee != null)
+            //{
                 // 既存の場合→最新のデータ読み込み
                 this.LatestStamping = new StampingDao().GetLatestStamping(this.Employee.Code);
                 // 退勤時間が押されているかどうか(初期値の場合は押されていない)
-                if (LatestStamping.LeavingWork != DateTime.Parse("0001/01/01 00:00:00"))
+                if (this.LatestStamping == null || LatestStamping.LeavingWork.CompareTo(new DateTime()) != 0)
                 {
                     StampingAttendance();
                 }
@@ -51,12 +51,12 @@ namespace Attendance_APP
                 {
                     StampingLeaving();
                 }
-            }
-            else
-            {
-                // 新規の場合→出勤打刻画面
-                StampingAttendance();
-            }
+            //}
+            //else
+            //{
+            //    // 新規の場合→出勤打刻画面
+            //    StampingAttendance();
+            //}
         }
 
         // 出勤打刻画面
@@ -129,7 +129,6 @@ namespace Attendance_APP
             // 退勤時間
             dto.LeavingWork = DateTime.Now;
 
-
             // 出勤時間、退勤時間を取得(丸め無し)
             var startTime = GetStartTime(this.LatestStamping.Attendance);
             var endTime = GetEndTime(dto.LeavingWork);
@@ -137,6 +136,8 @@ namespace Attendance_APP
             dto.WorkingHours = HourDifference(startTime, endTime);
 
             // 退勤打刻データをStampingDaoへ
+            var startDto = new StampingDao().GetLatestStamping(dto.EmployeeCode);
+            dto.Id = startDto.Id;
             new StampingDao().UpdateStamping(dto);
         }
 

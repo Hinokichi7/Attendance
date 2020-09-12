@@ -106,7 +106,9 @@ namespace Attendance_APP
             // 期間開始と終了が正しく選択できていれば保存
             if (date1 < date2)
             {
-                new OutputFile().SaveFileDialog((int)cmb_startYear.SelectedValue, (int)cmb_startMonth.SelectedItem, (int)cmb_startDay.SelectedItem, (int)cmb_endYear.SelectedValue, (int)cmb_endMonth.SelectedItem, (int)cmb_endDay.SelectedItem);
+                var starPoint = $"{(int)cmb_startYear.SelectedValue}-{(int)cmb_startMonth.SelectedItem:d2}-{(int)cmb_startDay.SelectedItem:d2}";
+                var endPoint = $"{(int)cmb_endYear.SelectedValue}-{(int)cmb_endMonth.SelectedItem:d2}-{(int)cmb_endDay.SelectedItem:d2}";
+                new OutputFile().SaveFileDialog(starPoint, endPoint);
             }
             else
             {
