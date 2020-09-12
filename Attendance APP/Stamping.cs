@@ -9,7 +9,7 @@ namespace Attendance_APP
     public partial class Stamping : Form
     {
         // Menuにて選択した社員①
-        private readonly EmployeeDto employee;
+        private EmployeeDto Employee { get; set; }
         // 社員①の最新の打刻データ
         private StampingDto LatestStamping { get; set; }
         // 打刻時間丸め設定
@@ -21,13 +21,13 @@ namespace Attendance_APP
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.employee = employee;
+            this.Employee = employee;
             // タイマー設定
             timer1.Interval = 1000;
             timer1.Enabled = true;
             // ラベル設定
             currentTime.Text = this.GetCurrentTime();
-            employeeName.Text = this.employee.Name;
+            employeeName.Text = this.Employee.Name;
 
             // 打刻画面表示選択
             this.GetAttendanceOrLeaving();
@@ -37,11 +37,11 @@ namespace Attendance_APP
         private void GetAttendanceOrLeaving()
         {
             // 社員①の打刻データが既存か新規か
-            var exitsEmployee = new StampingDao().GetAllStamping().Find(employee => employee.EmployeeCode == this.employee.Code);
+            var exitsEmployee = new StampingDao().GetAllStamping().Find(employee => employee.EmployeeCode == this.Employee.Code);
             if (exitsEmployee != null)
             {
                 // 既存の場合→最新のデータ読み込み
-                this.LatestStamping = new StampingDao().GetLatestStamping(this.employee.Code);
+                this.LatestStamping = new StampingDao().GetLatestStamping(this.Employee.Code);
                 // 退勤時間が押されているかどうか(初期値の場合は押されていない)
                 if (LatestStamping.LeavingWork != DateTime.Parse("0001/01/01 00:00:00"))
                 {
@@ -102,7 +102,7 @@ namespace Attendance_APP
             TimeStamp.Text = GetCurrentTime();
             // 打刻データをStamping.Daoへ(追加)
             var dto = new StampingDto();
-            dto.EmployeeCode = this.employee.Code;
+            dto.EmployeeCode = this.Employee.Code;
             dto.Year = DateTime.Now.Year;
             dto.Month = DateTime.Now.Month;
             dto.Day = DateTime.Now.Day;
@@ -125,7 +125,7 @@ namespace Attendance_APP
             TimeStamp.Text = GetCurrentTime();
             // 退勤打刻データ→<StampingDto>
             var dto = new StampingDto();
-            dto.EmployeeCode = this.employee.Code;
+            dto.EmployeeCode = this.Employee.Code;
             // 退勤時間
             dto.LeavingWork = DateTime.Now;
 

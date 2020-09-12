@@ -50,10 +50,9 @@ namespace Attendance_APP.Util
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 //OKボタンがクリックされたとき、選択されたファイル名を表示する
-                Console.WriteLine(sfd.FileName);
                 var Stampinglists = new StampingDao().GetTermStamping(year1, month1, day1, year2, month2, day2);
-                var fileName = sfd.FileName;
-                this.WriteCsv(fileName, false, Stampinglists);
+                Console.WriteLine($"{sfd.FileName}{Stampinglists}");
+                this.WriteCsv(sfd.FileName, false, Stampinglists);
             }
         }
     }

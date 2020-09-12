@@ -14,7 +14,6 @@ namespace Attendance_APP.Dao
             foreach (DataRow dr in dt.Rows)
             {
                 var dto = new StampingDto();
-
                 if (dt.Columns.Contains("employeeCode"))
                 {
                     dto.EmployeeCode = int.Parse(dr["employeeCode"].ToString());
@@ -158,7 +157,7 @@ namespace Attendance_APP.Dao
         {
             // 社員を指定して退勤時刻、労働時間を更新
             using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET leavingWork = @leavingWork, workingHours = @workingHours WHERE employeeCode = @employeeCode AND workingHours IS NULL", conn))
+            using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET leavingWork = @leavingWork, workingHours = @workingHours WHERE employeeCode = @employeeCode AND leavingWork IS NULL", conn))
             {
                 conn.Open();
 

@@ -38,6 +38,7 @@ namespace Attendance_APP
             cmb.SelectedIndex = 0;
         }
 
+        // 1からmaxまでの数値をcmbに追加
         private void SetCmbBoxItem(ComboBox cmb, int max)
         {
             for (var i = 1; i <= max; i++)
@@ -54,6 +55,7 @@ namespace Attendance_APP
         //    }
         //}
 
+        // 日付候補を取得
         private void SetCmbBoxItem(ComboBox cmb_year, ComboBox cmb_month, ComboBox cmb_day)
         {
             if (cmb_year.SelectedValue != null && cmb_month.SelectedItem != null)
@@ -75,6 +77,7 @@ namespace Attendance_APP
             // 最大の日分の日付をcmbに追加する
         }
 
+        // 年、月が選択される度に日付候補取得
         private void cmb_startYear_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.SetCmbBoxItem(cmb_startYear, cmb_startMonth, cmb_startDay);
@@ -97,10 +100,10 @@ namespace Attendance_APP
 
         private void outputCsv_Click(object sender, EventArgs e)
         {
+            // 選択された年月日の数値を日付に変換
             var date1 = DateTime.Parse(string.Format($"{cmb_startYear.SelectedValue:d4}/{cmb_startMonth.SelectedItem:d2}/{cmb_startDay.SelectedItem:d2} 00:00:00"));
             var date2 = DateTime.Parse(string.Format($"{cmb_endYear.SelectedValue:d4}/{cmb_endMonth.SelectedItem:d2}/{cmb_endDay.SelectedItem:d2} 00:00:00"));
             // 期間開始と終了が正しく選択できていれば保存
-            // (引数が数が多く長いのでまとめられないか)
             if (date1 < date2)
             {
                 new OutputFile().SaveFileDialog((int)cmb_startYear.SelectedValue, (int)cmb_startMonth.SelectedItem, (int)cmb_startDay.SelectedItem, (int)cmb_endYear.SelectedValue, (int)cmb_endMonth.SelectedItem, (int)cmb_endDay.SelectedItem);
