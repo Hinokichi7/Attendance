@@ -67,19 +67,6 @@ namespace Attendance_APP.Dao
             return list;
         }
 
-        //public List<StampingDto> GetAllStamping()
-        //{
-        //    var dt = new DataTable();
-        //    using (var conn = GetConnection())
-        //    using (var cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Stamping", conn))
-        //    {
-        //        conn.Open();
-        //        var adapter = new SqlDataAdapter(cmd);
-        //        adapter.Fill(dt);
-        //        return this.SetStampingDto(dt);
-        //    }
-        //}
-
         public StampingDto GetLatestStamping(int employeeCode)
         {
             // 社員を指定して最新の打刻データを読み込み
@@ -103,26 +90,6 @@ namespace Attendance_APP.Dao
             }
         }
 
-        //public StampingDto GetAttendance(int employeeCode, int year, int month, int day)
-        //{
-        //    //社員、年月日からStampingテーブルの行データを指定して読み込み
-        //    var dt = new DataTable();
-        //    using (var conn = GetConnection())
-        //    using (var cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Stamping WHERE employeeCode = @employeeCode AND year = @year AND month = @month AND day= @day", conn))
-        //    {
-
-        //        cmd.Parameters.AddWithValue("@employeeCode", employeeCode);
-        //        cmd.Parameters.AddWithValue("@year", year);
-        //        cmd.Parameters.AddWithValue("@month", month);
-        //        cmd.Parameters.AddWithValue("@day", day);
-
-        //        conn.Open();
-        //        var adapter = new SqlDataAdapter(cmd);
-        //        adapter.Fill(dt);
-        //        return this.SetStampingDto(dt)[0];
-        //    }
-        //}
-
         public List<StampingDto> GetStampingYears()
         {
             var dt = new DataTable();
@@ -138,11 +105,10 @@ namespace Attendance_APP.Dao
 
         public List<StampingDto> GetTermStamping(string startPoint, string endPoint)
         {
-            //年月日１から年月日２の期間からStampingテーブルの行データを指定して読み込み
+            // 期間(文字列で指定)データを取得
             var dt = new DataTable();
             using (var conn = GetConnection())
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Stamping WHERE attendance BETWEEN @startPoint AND @endPoint", conn))
-            //using (SqlCommand cmd = new SqlCommand("SELECT * FROM Attendance.dbo.Stamping WHERE attendance >= startPoint AND attendance <= endPoint", conn))
             {
                 cmd.Parameters.AddWithValue("@startPoint", startPoint);
                 cmd.Parameters.AddWithValue("@endPoint", endPoint);
@@ -155,7 +121,7 @@ namespace Attendance_APP.Dao
 
         public void AddStamping(StampingDto dto)
         {
-            // 社員コード、年月日、出勤時間、勤務種別を追加
+            // 作成時間、社員コード、年月日、出勤時間、勤務種別、備考を追加
             using (var conn = GetConnection())
             using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping(createTime, employeeCode, year, month, day, attendance, stampingCode, remark) VALUES(@createTime, @employeeCode,@year, @month, @day,@attendance,@stampingCode, @remark)", conn))
             {
@@ -177,7 +143,7 @@ namespace Attendance_APP.Dao
 
         public void UpdateStamping(StampingDto dto)
         {
-            // 社員を指定して退勤時刻、労働時間を更新
+            // idを指定して更新時間、退勤時刻、労働時間、備考を更新
             using (var conn = GetConnection())
             using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET updateTime = @updateTime, leavingWork = @leavingWork, workingHours = @workingHours, remark = @remark WHERE id = @id", conn))
             {
@@ -193,24 +159,5 @@ namespace Attendance_APP.Dao
 
             }
         }
-        //public void LeavingWorkStamping(StampingDto dto)
-        //{
-        //    // 社員、日付を指定して退勤時刻、労働時間を更新
-        //    using (var conn = GetConnection())
-        //    using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET leavingWork = @leavingWork, workingHours = @workingHours WHERE employeeCode = @employeeCode AND year = @year AND month = @month AND day= @day", conn))
-        //    {
-        //        conn.Open();
-
-        //        cmd.Parameters.AddWithValue("@leavingWork", dto.LeavingWork);
-        //        cmd.Parameters.AddWithValue("@employeeCode", dto.EmployeeCode);
-        //        cmd.Parameters.AddWithValue("@year", dto.Year);
-        //        cmd.Parameters.AddWithValue("@month", dto.Month);
-        //        cmd.Parameters.AddWithValue("@day", dto.Day);
-        //        cmd.Parameters.AddWithValue("@workingHours", dto.WorkingHours);
-
-        //        cmd.ExecuteNonQuery();
-
-        //    }
-        //}
     }
 }

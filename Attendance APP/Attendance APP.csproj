@@ -46,10 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dao\DepartmentDao.cs" />
     <Compile Include="Dao\StampingTypeDao.cs" />
     <Compile Include="Dao\Dao.cs" />
     <Compile Include="Dao\StampingDao.cs" />
     <Compile Include="Dao\EmployeeDao.cs" />
+    <Compile Include="Dto\DepartmentDto.cs" />
     <Compile Include="Dto\StampingTypeDto.cs" />
     <Compile Include="Dto\StampingDto.cs" />
     <Compile Include="Dto\EmployeeDto.cs" />

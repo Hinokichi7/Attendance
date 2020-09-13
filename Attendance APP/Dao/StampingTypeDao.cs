@@ -19,11 +19,10 @@ namespace Attendance_APP.Dao
                 adapter.Fill(dt);
                 foreach(DataRow dr in dt.Rows)
                 {
-                    var dto = new StampingTypeDto
-                    {
-                        StampingCode = int.Parse(dr["stampingCode"].ToString()),
-                        StampingName = dr["stampingName"].ToString()
-                    };
+                    var dto = new StampingTypeDto();
+                    dto.StampingCode = int.Parse(dr["stampingCode"].ToString());
+                    dto.StampingName = dr["stampingName"].ToString();
+
                     list.Add(dto);
                 }
                 return list;

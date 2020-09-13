@@ -51,11 +51,11 @@
             // cmb_employee
             // 
             this.cmb_employee.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cmb_employee.Font = new System.Drawing.Font("Meiryo UI", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.cmb_employee.Font = new System.Drawing.Font("メイリオ", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.cmb_employee.FormattingEnabled = true;
             this.cmb_employee.Location = new System.Drawing.Point(3, 3);
             this.cmb_employee.Name = "cmb_employee";
-            this.cmb_employee.Size = new System.Drawing.Size(440, 50);
+            this.cmb_employee.Size = new System.Drawing.Size(440, 49);
             this.cmb_employee.TabIndex = 4;
             // 
             // tableLayoutPanel1
@@ -109,7 +109,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Menu";
-            this.Text = "Form1";
+            this.Text = "勤怠ソフト";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
