@@ -52,5 +52,10 @@ namespace Attendance_APP
             var csvOutput = new ForOutput();
             csvOutput.ShowDialog(this);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new AdminMenu().ShowDialog(this);
+        }
     }
 }

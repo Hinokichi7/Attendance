@@ -1,5 +1,6 @@
 ﻿using Attendance_APP.Dao;
 using Attendance_APP.Dto;
+using Attendance_APP.Util;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -12,10 +13,6 @@ namespace Attendance_APP
         private EmployeeDto Employee { get; set; }
         // 社員①の最新の打刻データ
         private StampingDto LatestStamping { get; set; }
-        // 打刻時間丸め設定
-        private TimeSpan interval = TimeSpan.FromMinutes(30);
-        // 勤務種別
-        private List<StampingTypeDto> Tbl_stampimgType { get; set; }
 
         public Stamping(EmployeeDto employee)
         {
@@ -53,12 +50,8 @@ namespace Attendance_APP
         // 出勤打刻画面
         private void StampingAttendance()
         {
-            // 全勤務種別をStampingDaoより取得
-            this.Tbl_stampimgType = new StampingTypeDao().GetAllStampingType();
             // cmb_stampingTypeに設定・表示
-            cmb_stampingType.DataSource = this.Tbl_stampimgType;
-            cmb_stampingType.ValueMember = "StampingCode";
-            cmb_stampingType.DisplayMember = "StampingName";
+            new CmbStampingType().SetComBox(cmb_stampingType);
             // 退勤ボタン不可
             StampBtn2.Enabled = false;
         }
@@ -99,14 +92,8 @@ namespace Attendance_APP
             dto.Month = DateTime.Now.Month;
             dto.Day = DateTime.Now.Day;
             dto.Attendance = DateTime.Now;
-            dto.Remark = "bikou";
-            dto.StampingCode = GetSelectedStampingType().StampingCode;
+            dto.StampingCode = new CmbStampingType().GetSelectedStampingType(cmb_stampingType).StampingCode;
             new StampingDao().AddStamping(dto);
-        }
-        // 勤務種別選択
-        private StampingTypeDto GetSelectedStampingType()
-        {
-            return this.Tbl_stampimgType.Find(stampingType => stampingType.StampingCode == int.Parse(cmb_stampingType.SelectedValue.ToString()));
         }
 
         // 退勤打刻ボタン
@@ -120,59 +107,15 @@ namespace Attendance_APP
             var dto = new StampingDto();
             dto.UpdateTime = DateTime.Now;
             dto.LeavingWork = DateTime.Now;
-            // 出勤データを取得
-            //var startDto = new StampingDao().GetLatestStamping(dto.EmployeeCode);
             // 出勤時間、退勤時間を取得(丸め無し)
-            var startTime = GetStartTime(this.LatestStamping.Attendance);
-            var endTime = GetEndTime(dto.LeavingWork);
+            var startTime = new WorkingHours().GetStartTime(this.LatestStamping.Attendance);
+            var endTime = new WorkingHours().GetEndTime(dto.LeavingWork);
             // 労働時間
-            dto.WorkingHours = HourDifference(startTime, endTime);
-            dto.Remark = "bikou2";
+            dto.WorkingHours = new WorkingHours().GetWorkingHours(startTime, endTime);
 
             // 出勤打刻データに対して退勤打刻、労働時間をStampingDaoへ
             dto.Id = this.LatestStamping.Id;
             new StampingDao().UpdateStamping(dto);
         }
-
-        // 労働時間計算　退勤時間(丸め) - 出勤時間(丸め)
-        private double HourDifference(DateTime startTime, DateTime endTime)
-        {
-            Console.WriteLine(startTime.ToString());
-            Console.WriteLine(endTime.ToString());
-            var hourDeffrence = endTime - startTime;
-            if (hourDeffrence.TotalHours < 0.5)
-            {
-                return 0;
-            }
-            return hourDeffrence.TotalHours;
-        }
-
-        private DateTime GetStartTime(DateTime startTime)
-        {
-            // 出勤時間(丸め)：定時以前なら定時、定時以降なら切り上げ
-            var baseTime = DateTime.Parse($"{startTime.Year}/{startTime.Month}/{startTime.Day} 09:00:00");
-            if (startTime > baseTime)
-            {
-                return RoundUp(startTime, interval);
-            }
-            return baseTime;
-        }
-
-        private DateTime GetEndTime(DateTime endTime)
-        {
-            // 退勤時間(丸め)：切り下げ
-            return RoundDown(endTime, this.interval);
-        }
-
-        private DateTime RoundUp(DateTime input, TimeSpan interval)
-        {
-            return new DateTime(((input.Ticks + interval.Ticks - 1) / interval.Ticks) * interval.Ticks, input.Kind);
-        }
-
-        private DateTime RoundDown(DateTime input, TimeSpan interval)
-        {
-            return new DateTime((((input.Ticks + interval.Ticks) / interval.Ticks) - 1) * interval.Ticks, input.Kind);
-        }
-
     }
 }

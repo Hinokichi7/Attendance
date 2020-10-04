@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Util\CmbStampingType.cs" />
+    <Compile Include="Util\WorkingHours.cs" />
+    <Compile Include="Util\CmbDate.cs" />
     <Compile Include="Dao\DepartmentDao.cs" />
     <Compile Include="Dao\StampingTypeDao.cs" />
     <Compile Include="Dao\Dao.cs" />
@@ -55,6 +58,24 @@
     <Compile Include="Dto\StampingTypeDto.cs" />
     <Compile Include="Dto\StampingDto.cs" />
     <Compile Include="Dto\EmployeeDto.cs" />
+    <Compile Include="Admin\AdminMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\AdminMenu.Designer.cs">
+      <DependentUpon>AdminMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\NewRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\NewRecord.Designer.cs">
+      <DependentUpon>NewRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\EditRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\EditRecord.Designer.cs">
+      <DependentUpon>EditRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="ForOutput.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +97,15 @@
       <DependentUpon>Stamping.cs</DependentUpon>
     </Compile>
     <Compile Include="Util\OutputFile.cs" />
+    <EmbeddedResource Include="Admin\AdminMenu.resx">
+      <DependentUpon>AdminMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\NewRecord.resx">
+      <DependentUpon>NewRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\EditRecord.resx">
+      <DependentUpon>EditRecord.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ForOutput.resx">
       <DependentUpon>ForOutput.cs</DependentUpon>
     </EmbeddedResource>

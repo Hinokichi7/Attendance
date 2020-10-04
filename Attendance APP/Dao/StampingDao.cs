@@ -121,9 +121,9 @@ namespace Attendance_APP.Dao
 
         public void AddStamping(StampingDto dto)
         {
-            // 作成時間、社員コード、年月日、出勤時間、勤務種別、備考を追加
+            // 出勤打刻
             using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping(createTime, employeeCode, year, month, day, attendance, stampingCode, remark) VALUES(@createTime, @employeeCode,@year, @month, @day,@attendance,@stampingCode, @remark)", conn))
+            using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping(createTime, employeeCode, year, month, day, attendance, stampingCode) VALUES(@createTime, @employeeCode,@year, @month, @day,@attendance,@stampingCode)", conn))
             {
                 conn.Open();
 
@@ -134,7 +134,6 @@ namespace Attendance_APP.Dao
                 cmd.Parameters.AddWithValue("@day", dto.Day);
                 cmd.Parameters.AddWithValue("@attendance", dto.Attendance);
                 cmd.Parameters.AddWithValue("@stampingCode", dto.StampingCode);
-                cmd.Parameters.AddWithValue("@remark", dto.Remark);
 
                 cmd.ExecuteNonQuery();
 
@@ -143,15 +142,38 @@ namespace Attendance_APP.Dao
 
         public void UpdateStamping(StampingDto dto)
         {
-            // idを指定して更新時間、退勤時刻、労働時間、備考を更新
+            // 退勤打刻
             using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET updateTime = @updateTime, leavingWork = @leavingWork, workingHours = @workingHours, remark = @remark WHERE id = @id", conn))
+            using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET updateTime = @updateTime, leavingWork = @leavingWork, workingHours = @workingHours WHERE id = @id", conn))
             {
                 conn.Open();
 
                 cmd.Parameters.AddWithValue("@id", dto.Id);
                 cmd.Parameters.AddWithValue("@updateTime", dto.UpdateTime);
                 cmd.Parameters.AddWithValue("@leavingWork", dto.LeavingWork);
+                cmd.Parameters.AddWithValue("@workingHours", dto.WorkingHours);
+
+                cmd.ExecuteNonQuery();
+
+            }
+        }
+
+        public void AddNewRecord(StampingDto dto)
+        {
+            // 新規追加(管理)
+            using (var conn = GetConnection())
+            using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping(createTime, employeeCode, year, month, day, attendance, leavingwork, stampingCode, workingHours, remark) VALUES(@createTime, @employeeCode, @year, @month, @day, @attendance, @leavingWork, @stampingCode, @workingHours, @remark)", conn))
+            {
+                conn.Open();
+
+                cmd.Parameters.AddWithValue("@createTime", dto.CreateTime);
+                cmd.Parameters.AddWithValue("@employeeCode", dto.EmployeeCode);
+                cmd.Parameters.AddWithValue("@year", dto.Year);
+                cmd.Parameters.AddWithValue("@month", dto.Month);
+                cmd.Parameters.AddWithValue("@day", dto.Day);
+                cmd.Parameters.AddWithValue("@attendance", dto.Attendance);
+                cmd.Parameters.AddWithValue("@leavingWork", dto.LeavingWork);
+                cmd.Parameters.AddWithValue("@stampingCode", dto.StampingCode);
                 cmd.Parameters.AddWithValue("@workingHours", dto.WorkingHours);
                 cmd.Parameters.AddWithValue("@remark", dto.Remark);
 

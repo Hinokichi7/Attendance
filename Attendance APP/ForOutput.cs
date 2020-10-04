@@ -19,32 +19,16 @@ namespace Attendance_APP
 
         private void InitializeCmbBox() 
         {
+            var setCmbDate = new SetCmbDate();
             // cmbに設定・表示
             // StampingDaoより年取得
-            this.SetCmbBox(cmb_startYear, new StampingDao().GetStampingYears(), "Year", "Year");
-            this.SetCmbBox(cmb_endYear, new StampingDao().GetStampingYears(), "Year", "Year");
+            setCmbDate.SetCmbBox(cmb_startYear, new StampingDao().GetStampingYears(), "Year", "Year");
+            setCmbDate.SetCmbBox(cmb_endYear, new StampingDao().GetStampingYears(), "Year", "Year");
 
-            this.SetCmbBox(cmb_startMonth, 12);
-            this.SetCmbBox(cmb_endMonth, 12);
+            setCmbDate.SetCmbBox(cmb_startMonth, 12);
+            setCmbDate.SetCmbBox(cmb_endMonth, 12);
         }
 
-        private void SetCmbBox(ComboBox cmb, List<StampingDto> list, String DisplayMember, String ValueMember) 
-        {
-            cmb.DataSource = list;
-            cmb.ValueMember = ValueMember;
-            cmb.DisplayMember = DisplayMember;
-            cmb.SelectedIndex = 0;
-        }
-
-        // 1からmaxまでの数値をcmb.Itemに追加
-        private void SetCmbBox(ComboBox cmb, int max)
-        {
-            for (var i = 1; i <= max; i++)
-            {
-                cmb.Items.Add(i);
-            }
-            cmb.SelectedIndex = 0;
-        }
 
         // 日付候補を取得
         private void SetCmbBoxDay(ComboBox cmb_year, ComboBox cmb_month, ComboBox cmb_day)
@@ -54,7 +38,7 @@ namespace Attendance_APP
                 cmb_day.Items.Clear();
                 var maxDay = DateTime.DaysInMonth((int)cmb_year.SelectedValue, (int)cmb_month.SelectedItem);
 
-                SetCmbBox(cmb_day, maxDay);
+                new SetCmbDate().SetCmbBox(cmb_day, maxDay);
             }
         }
 

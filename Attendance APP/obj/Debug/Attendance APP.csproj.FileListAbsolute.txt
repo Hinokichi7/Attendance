@@ -22,3 +22,6 @@ C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance APP.cs
 C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance APP.csproj.CoreCompileInputs.cache
 C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance APP.exe
 C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance APP.pdb
+C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance_APP.AdminMenu.resources
+C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance_APP.NewRecord.resources
+C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance_APP.EditRecord.resources
