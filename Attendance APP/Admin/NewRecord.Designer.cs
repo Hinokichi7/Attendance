@@ -59,7 +59,6 @@
             this.cmb_employee.Name = "cmb_employee";
             this.cmb_employee.Size = new System.Drawing.Size(121, 25);
             this.cmb_employee.TabIndex = 0;
-            this.cmb_employee.SelectedIndexChanged += new System.EventHandler(this.cmb_employee_SelectedIndexChanged);
             // 
             // cmb_startHour
             // 
