@@ -15,52 +15,78 @@ namespace Attendance_APP
 {
     public partial class NewRecord : Form
     {
+        // Conboboxにて選択した社員
         private List<EmployeeDto> EmployeeList { get; set; }
+        private List<StampingTypeDto> StampingTypeList { get; set; }
 
         public NewRecord()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
-            
-            this.SetEmployList(cmb_employee);
+
+            this.EmployeeList = new EmployeeDao().GetAllEmployee();
+            this.SetCmbEmployee();
+            this.SetCmbStampingType();
+
             this.InitializeCmbBox();
         }
 
-        private void SetEmployList(ComboBox cmb)
+        // 社員選択
+        public void SetCmbEmployee()
         {
-            // 社員を取得
-            this.EmployeeList = new EmployeeDao().GetAllEmployee();
-            // cmbに設定・表示
-            cmb.DataSource = this.EmployeeList;
-            cmb.ValueMember = "Code";
-            cmb.DisplayMember = "Name";
+            cmb_employee.DataSource = this.EmployeeList;
+            cmb_employee.ValueMember = "Code";
+            cmb_employee.DisplayMember = "Name";
+            cmb_employee.SelectedIndex = 0;
         }
-
         private EmployeeDto GetSelectedEmployee()
         {
             return this.EmployeeList.Find(employee => employee.Code == int.Parse(cmb_employee.SelectedValue.ToString()));
         }
         //private void cmb_employee_SelectedIndexChanged(object sender, EventArgs e)
         //{
-        //    departmentName.Text = new DepartmentDao().GetAllDepartment().Find(department => department.Code == this.GetSelectedEmployee().DepartmentCode).Name;
+        //    var dep = new DepartmentDao().GetAllDepartment().Find(department => department.Code == GetSelectedEmployee().DepartmentCode);
+        //    departmentName.Text = dep.Name;
         //}
+
+        // cmb_stampingTypeに設定・表示
+        private void SetCmbStampingType()
+        {
+            cmb_stampingType.DataSource = new StampingTypeDao().GetAllStampingType();
+            cmb_stampingType.ValueMember = "StampingCode";
+            cmb_stampingType.DisplayMember = "StampingName";
+        }
 
 
         private void InitializeCmbBox()
         {
             // cmbに設定・表示
-            // StampingDaoより年取得
-            new SetCmbDate().SetCmbBox(cmb_year, new StampingDao().GetStampingYears(), "Year", "Year");
-            new SetCmbDate().SetCmbBox(cmb_month, 12);
-            this.SetCmbBoxDay(cmb_year, cmb_month, cmb_day);
+            this.SetCmbYear(cmb_year);
+            this.SetCmbBox(cmb_month, 12);
+            //this.SetCmbBoxDay(cmb_year, cmb_month, cmb_day);
 
             this.SetCmbBoxTime(cmb_startHour, 1, 24, 8);
             this.SetCmbBoxTime(cmb_startMinut, 0, 59, 0);
             this.SetCmbBoxTime(cmb_endHour, 1, 24, 17);
             this.SetCmbBoxTime(cmb_endMinut, 0, 59, 0);
+        }
 
-            // cmb_stampingTypeに設定・表示
-            new CmbStampingType().SetComBox(cmb_stampingType);
+        public void SetCmbYear(ComboBox cmb)
+        {
+            cmb.DataSource = new StampingDao().GetStampingYears();
+            cmb.ValueMember = "Year";
+            cmb.DisplayMember = "Year";
+            cmb.SelectedIndex = 0;
+        }
+
+        // 1からmaxまでの数値をcmb.Itemに追加
+        public void SetCmbBox(ComboBox cmb, int max)
+        {
+            for (var i = 1; i <= max; i++)
+            {
+                cmb.Items.Add(i);
+            }
+            cmb.SelectedIndex = 0;
         }
 
 
@@ -72,17 +98,17 @@ namespace Attendance_APP
                 cmb_day.Items.Clear();
                 var maxDay = DateTime.DaysInMonth((int)cmb_year.SelectedValue, (int)cmb_month.SelectedItem);
 
-                new SetCmbDate().SetCmbBox(cmb_day, maxDay);
+                this.SetCmbBox(cmb_day, maxDay);
             }
         }
 
         // 年、月が選択される度に日付候補取得
-        private void cmb_startYear_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmb_year_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.SetCmbBoxDay(cmb_year, cmb_month, cmb_day);
         }
 
-        private void cmb_startMonth_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmb_month_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.SetCmbBoxDay(cmb_year, cmb_month, cmb_day);
         }
@@ -92,6 +118,7 @@ namespace Attendance_APP
             return DateTime.Parse(string.Format($"{cmb_year.SelectedValue:d4}/{cmb_month.SelectedItem:d2}/{cmb_day.SelectedItem:d2} {cmbHour.SelectedItem:d2}:{cmbmMinut.SelectedItem:d2}:00"));
         }
 
+
         private void SetCmbBoxTime(ComboBox cmb, int n, int max, int ix)
         {
             for (var i = n; i <= max; i++)
@@ -100,6 +127,11 @@ namespace Attendance_APP
             }
             cmb.SelectedIndex = ix;
             cmb.FormatString = "00";
+        }
+
+        private StampingTypeDto GetSelectedStampingType()
+        {
+            return this.StampingTypeList.Find(stampingType => stampingType.StampingCode == int.Parse(cmb_stampingType.SelectedValue.ToString()));
         }
 
 
@@ -114,7 +146,7 @@ namespace Attendance_APP
             dto.Day = (int)cmb_day.SelectedItem;
             dto.Attendance = this.GetStampingTime(cmb_startHour, cmb_startMinut);
             dto.LeavingWork = this.GetStampingTime(cmb_endHour, cmb_endMinut);
-            dto.StampingCode = new CmbStampingType().GetSelectedStampingType(cmb_stampingType).StampingCode;
+            dto.StampingCode = this.GetSelectedStampingType().StampingCode;
             // 出勤時間、退勤時間を取得(丸め無し)
             var startTime = new WorkingHours().GetStartTime(this.GetStampingTime(cmb_startHour, cmb_startMinut));
             var endTime = new WorkingHours().GetEndTime(this.GetStampingTime(cmb_endHour, cmb_endMinut));

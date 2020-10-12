@@ -46,9 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Util\CmbStampingType.cs" />
     <Compile Include="Util\WorkingHours.cs" />
-    <Compile Include="Util\CmbDate.cs" />
     <Compile Include="Dao\DepartmentDao.cs" />
     <Compile Include="Dao\StampingTypeDao.cs" />
     <Compile Include="Dao\Dao.cs" />

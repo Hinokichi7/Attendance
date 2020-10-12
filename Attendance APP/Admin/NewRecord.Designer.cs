@@ -132,6 +132,7 @@
             this.cmb_year.Name = "cmb_year";
             this.cmb_year.Size = new System.Drawing.Size(70, 25);
             this.cmb_year.TabIndex = 7;
+            this.cmb_year.SelectedIndexChanged += new System.EventHandler(this.cmb_year_SelectedIndexChanged);
             // 
             // cmb_month
             // 
@@ -141,6 +142,7 @@
             this.cmb_month.Name = "cmb_month";
             this.cmb_month.Size = new System.Drawing.Size(45, 25);
             this.cmb_month.TabIndex = 8;
+            this.cmb_month.SelectedIndexChanged += new System.EventHandler(this.cmb_month_SelectedIndexChanged);
             // 
             // cmb_day
             // 

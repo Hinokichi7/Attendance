@@ -34,15 +34,15 @@
             this.stampBtn = new System.Windows.Forms.Button();
             this.TimeStamp = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.cmb_employee = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.departmentName = new System.Windows.Forms.Label();
             this.cmb_stampingType = new System.Windows.Forms.ComboBox();
-            this.employeeName = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.StampBtn2 = new System.Windows.Forms.Button();
-            this.departmentName = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -97,13 +97,13 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.cmb_employee);
             this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.departmentName);
             this.splitContainer1.Panel1.Controls.Add(this.cmb_stampingType);
-            this.splitContainer1.Panel1.Controls.Add(this.employeeName);
             this.splitContainer1.Panel1.Controls.Add(this.currentTime);
             this.splitContainer1.Panel1.Controls.Add(this.TimeStamp);
             // 
@@ -114,6 +114,66 @@
             this.splitContainer1.SplitterDistance = 386;
             this.splitContainer1.TabIndex = 6;
             // 
+            // cmb_employee
+            // 
+            this.cmb_employee.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.cmb_employee.FormattingEnabled = true;
+            this.cmb_employee.Location = new System.Drawing.Point(93, 59);
+            this.cmb_employee.Name = "cmb_employee";
+            this.cmb_employee.Size = new System.Drawing.Size(148, 36);
+            this.cmb_employee.TabIndex = 11;
+            this.cmb_employee.SelectedIndexChanged += new System.EventHandler(this.cmb_employee_SelectedIndexChanged_1);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label4.Location = new System.Drawing.Point(30, 250);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(88, 28);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "打刻時間";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label3.Location = new System.Drawing.Point(30, 186);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(88, 28);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "勤務種別";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label2.Location = new System.Drawing.Point(30, 119);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(50, 28);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "部署";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label1.Location = new System.Drawing.Point(30, 67);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(50, 28);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "氏名";
+            // 
+            // departmentName
+            // 
+            this.departmentName.AutoSize = true;
+            this.departmentName.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.departmentName.Location = new System.Drawing.Point(87, 116);
+            this.departmentName.Name = "departmentName";
+            this.departmentName.Size = new System.Drawing.Size(56, 31);
+            this.departmentName.TabIndex = 6;
+            this.departmentName.Text = "部署";
+            // 
             // cmb_stampingType
             // 
             this.cmb_stampingType.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -122,16 +182,6 @@
             this.cmb_stampingType.Name = "cmb_stampingType";
             this.cmb_stampingType.Size = new System.Drawing.Size(105, 36);
             this.cmb_stampingType.TabIndex = 5;
-            // 
-            // employeeName
-            // 
-            this.employeeName.AutoSize = true;
-            this.employeeName.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.employeeName.Location = new System.Drawing.Point(87, 67);
-            this.employeeName.Name = "employeeName";
-            this.employeeName.Size = new System.Drawing.Size(56, 31);
-            this.employeeName.TabIndex = 0;
-            this.employeeName.Text = "氏名";
             // 
             // splitContainer2
             // 
@@ -164,56 +214,6 @@
             this.StampBtn2.UseVisualStyleBackColor = false;
             this.StampBtn2.Click += new System.EventHandler(this.StampBtn2_Click);
             // 
-            // departmentName
-            // 
-            this.departmentName.AutoSize = true;
-            this.departmentName.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.departmentName.Location = new System.Drawing.Point(87, 116);
-            this.departmentName.Name = "departmentName";
-            this.departmentName.Size = new System.Drawing.Size(56, 31);
-            this.departmentName.TabIndex = 6;
-            this.departmentName.Text = "部署";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label1.Location = new System.Drawing.Point(30, 67);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 28);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "氏名";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.Location = new System.Drawing.Point(30, 119);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 28);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "部署";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label3.Location = new System.Drawing.Point(30, 186);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 28);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "勤務種別";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label4.Location = new System.Drawing.Point(30, 250);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 28);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "打刻時間";
-            // 
             // Stamping
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -245,12 +245,12 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Button StampBtn2;
-        private System.Windows.Forms.Label employeeName;
         private System.Windows.Forms.ComboBox cmb_stampingType;
         private System.Windows.Forms.Label departmentName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cmb_employee;
     }
 }

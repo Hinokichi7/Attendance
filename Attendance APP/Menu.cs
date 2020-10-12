@@ -2,42 +2,24 @@
 using Attendance_APP.Dto;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace Attendance_APP
 {
     public partial class Menu : Form
     {
-        private List<EmployeeDto> EmployeeList { get; set; }
 
         public Menu()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
-            // cmbに設定(社員データ)
-            this.SetEmployList(cmb_employee);
-        }
-
-        private void SetEmployList(ComboBox cmb)
-        {
-            // 社員を取得
-            this.EmployeeList = new EmployeeDao().GetAllEmployee();
-            // cmbに設定・表示
-            cmb.DataSource = this.EmployeeList;
-            cmb.ValueMember = "Code";
-            cmb.DisplayMember = "Name";
-        }
-
-        private EmployeeDto GetSelectedEmployee() {
-            return this.EmployeeList.Find(employee => employee.Code == int.Parse(cmb_employee.SelectedValue.ToString()));
         }
 
 
         private void Stamping_Click(object sender, EventArgs e)
         {
-            // 選択した社員ををStampingクラスへ渡す
-            var employee = GetSelectedEmployee();
-            var stamping = new Stamping(employee);
+            var stamping = new Stamping();
             stamping.ShowDialog(this);
         }
 
