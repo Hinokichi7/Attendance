@@ -15,19 +15,19 @@ namespace Attendance_APP
 {
     public partial class NewRecord : Form
     {
-        // Conboboxにて選択した社員
         private List<EmployeeDto> EmployeeList { get; set; }
         private List<StampingTypeDto> StampingTypeList { get; set; }
 
         public NewRecord()
         {
             InitializeComponent();
+
             this.StartPosition = FormStartPosition.CenterScreen;
 
             this.EmployeeList = new EmployeeDao().GetAllEmployee();
+            this.StampingTypeList = new StampingTypeDao().GetAllStampingType();
             this.SetCmbEmployee();
             this.SetCmbStampingType();
-
             this.InitializeCmbBox();
         }
 
@@ -37,33 +37,41 @@ namespace Attendance_APP
             cmb_employee.DataSource = this.EmployeeList;
             cmb_employee.ValueMember = "Code";
             cmb_employee.DisplayMember = "Name";
-            cmb_employee.SelectedIndex = 0;
+            cmb_employee.SelectedIndex = -1;
         }
+
         private EmployeeDto GetSelectedEmployee()
         {
+            if (cmb_employee.SelectedIndex == -1)
+            {
+                return null;
+            }
             return this.EmployeeList.Find(employee => employee.Code == int.Parse(cmb_employee.SelectedValue.ToString()));
         }
-        //private void cmb_employee_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    var dep = new DepartmentDao().GetAllDepartment().Find(department => department.Code == GetSelectedEmployee().DepartmentCode);
-        //    departmentName.Text = dep.Name;
-        //}
 
-        // cmb_stampingTypeに設定・表示
+        private void cmb_employee_SelectionChangeCommitted_1(object sender, EventArgs e)
+        {
+            var employee = this.GetSelectedEmployee();
+            if (employee != null)
+            {
+                departmentName.Text = new DepartmentDao().GetAllDepartment().Find(department => department.Code == employee.DepartmentCode).Name;
+            }
+        }
+
+        // 打刻種類選択
         private void SetCmbStampingType()
         {
             cmb_stampingType.DataSource = new StampingTypeDao().GetAllStampingType();
             cmb_stampingType.ValueMember = "StampingCode";
             cmb_stampingType.DisplayMember = "StampingName";
+            cmb_stampingType.SelectedIndex = -1;
         }
-
 
         private void InitializeCmbBox()
         {
             // cmbに設定・表示
             this.SetCmbYear(cmb_year);
             this.SetCmbBox(cmb_month, 12);
-            //this.SetCmbBoxDay(cmb_year, cmb_month, cmb_day);
 
             this.SetCmbBoxTime(cmb_startHour, 1, 24, 8);
             this.SetCmbBoxTime(cmb_startMinut, 0, 59, 0);
@@ -103,12 +111,12 @@ namespace Attendance_APP
         }
 
         // 年、月が選択される度に日付候補取得
-        private void cmb_year_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmb_year_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             this.SetCmbBoxDay(cmb_year, cmb_month, cmb_day);
         }
 
-        private void cmb_month_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmb_month_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             this.SetCmbBoxDay(cmb_year, cmb_month, cmb_day);
         }
@@ -131,12 +139,15 @@ namespace Attendance_APP
 
         private StampingTypeDto GetSelectedStampingType()
         {
+            if (cmb_stampingType.SelectedIndex == -1)
+            {
+                return null;
+            }
             return this.StampingTypeList.Find(stampingType => stampingType.StampingCode == int.Parse(cmb_stampingType.SelectedValue.ToString()));
         }
 
 
-
-        private void AddNewRecord_Click(object sender, EventArgs e)
+        private void AddNewRecord_Click_1(object sender, EventArgs e)
         {
             var dto = new StampingDto();
             dto.EmployeeCode = this.GetSelectedEmployee().Code;
@@ -152,8 +163,7 @@ namespace Attendance_APP
             var endTime = new WorkingHours().GetEndTime(this.GetStampingTime(cmb_endHour, cmb_endMinut));
             // 労働時間
             dto.WorkingHours = new WorkingHours().GetWorkingHours(startTime, endTime);
-            dto.Remark = textBox1.Text;
-            new AdminMenu().ShowDialog(this);
+            dto.Remark = remark.Text;
             new StampingDao().AddNewRecord(dto);
             this.Close();
         }

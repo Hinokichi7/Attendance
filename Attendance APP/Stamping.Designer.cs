@@ -122,7 +122,7 @@
             this.cmb_employee.Name = "cmb_employee";
             this.cmb_employee.Size = new System.Drawing.Size(148, 36);
             this.cmb_employee.TabIndex = 11;
-            this.cmb_employee.SelectedIndexChanged += new System.EventHandler(this.cmb_employee_SelectedIndexChanged_1);
+            this.cmb_employee.SelectionChangeCommitted += new System.EventHandler(this.cmb_employee_SelectionChangeCommitted);
             // 
             // label4
             // 

@@ -10,57 +10,64 @@ namespace Attendance_APP
 {
     public partial class Stamping : Form
     {
-        //ComboBoxにて選択した社員
+        //ComboBoxにて表示・選択
         private List<EmployeeDto> EmployeeList { get; set; }
+        private List<StampingTypeDto> StampingTypeList { get; set; }
         // 社員①の最新の打刻データ
         private StampingDto LatestStamping { get; set; }
-        private List<StampingTypeDto> StampingTypeList { get; set; }
 
         public Stamping()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
 
+            //cmbにて表示・選択
             this.EmployeeList = new EmployeeDao().GetAllEmployee();
+            this.StampingTypeList = new StampingTypeDao().GetAllStampingType();
             this.SetCmbEmployee();
             this.SetCmbStampingType();
+
             // タイマー設定
             timer1.Interval = 1000;
             timer1.Enabled = true;
             // ラベル設定  
             //departmentName.Text = this.GetSelectedEmployeeDepartment().Name;
             currentTime.Text = this.GetCurrentTime();
-
-            // 打刻画面表示選択
-            this.GetAttendanceOrLeaving();           
         }
         
 
         public void SetCmbEmployee()
         {
-            cmb_employee.DataSource = this.EmployeeList;
+            cmb_employee.DataSource = new EmployeeDao().GetAllEmployee();
             cmb_employee.ValueMember = "Code";
             cmb_employee.DisplayMember = "Name";
-            //cmb_employee.SelectedIndex = 0;
+            cmb_employee.SelectedIndex = -1;
         }
 
         private EmployeeDto GetSelectedEmployee()
         {
+            if (cmb_employee.SelectedIndex == -1)
+            {
+                return null;
+            }
             return this.EmployeeList.Find(employee => employee.Code == int.Parse(cmb_employee.SelectedValue.ToString()));
         }
 
-        private void cmb_employee_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void cmb_employee_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if (this.GetSelectedEmployee() != null)
+            var employee = this.GetSelectedEmployee();
+            if (employee != null)
             {
-            departmentName.Text = new DepartmentDao().GetAllDepartment().Find(department => department.Code == this.GetSelectedEmployee().DepartmentCode).Name;
+                departmentName.Text = new DepartmentDao().GetAllDepartment().Find(department => department.Code == employee.DepartmentCode).Name;
+                GetAttendanceOrLeaving();
             }
         }
+
 
         // cmb_stampingTypeに設定・表示
         private void SetCmbStampingType()
         {
-            cmb_stampingType.DataSource = new StampingTypeDao().GetAllStampingType();
+            cmb_stampingType.DataSource = this.StampingTypeList;
             cmb_stampingType.ValueMember = "StampingCode";
             cmb_stampingType.DisplayMember = "StampingName";
         }
@@ -154,7 +161,5 @@ namespace Attendance_APP
             dto.Id = this.LatestStamping.Id;
             new StampingDao().UpdateStamping(dto);
         }
-
-
     }
 }
