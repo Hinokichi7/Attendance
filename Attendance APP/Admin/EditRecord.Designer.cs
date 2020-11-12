@@ -38,8 +38,8 @@
             this.cmbDate2 = new Attendance_APP.CmbDate();
             this.cmbEmployee1 = new Attendance_APP.CmbEmployee();
             this.cmbDate1 = new Attendance_APP.CmbDate();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.edit = new System.Windows.Forms.Button();
+            this.delete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,7 +52,7 @@
             this.search.TabIndex = 4;
             this.search.Text = "検索";
             this.search.UseVisualStyleBackColor = true;
-            this.search.Click += new System.EventHandler(this.button1_Click);
+            this.search.Click += new System.EventHandler(this.serch_Click);
             // 
             // label1
             // 
@@ -133,32 +133,32 @@
             this.cmbDate1.Size = new System.Drawing.Size(281, 38);
             this.cmbDate1.TabIndex = 10;
             // 
-            // button1
+            // edit
             // 
-            this.button1.Location = new System.Drawing.Point(572, 415);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "編集";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.edit.Location = new System.Drawing.Point(572, 415);
+            this.edit.Name = "edit";
+            this.edit.Size = new System.Drawing.Size(75, 23);
+            this.edit.TabIndex = 16;
+            this.edit.Text = "編集";
+            this.edit.UseVisualStyleBackColor = true;
+            this.edit.Click += new System.EventHandler(this.edit_Click_1);
             // 
-            // button2
+            // delete
             // 
-            this.button2.Location = new System.Drawing.Point(675, 415);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 17;
-            this.button2.Text = "削除";
-            this.button2.UseVisualStyleBackColor = true;
+            this.delete.Location = new System.Drawing.Point(675, 415);
+            this.delete.Name = "delete";
+            this.delete.Size = new System.Drawing.Size(75, 23);
+            this.delete.TabIndex = 17;
+            this.delete.Text = "削除";
+            this.delete.UseVisualStyleBackColor = true;
             // 
             // EditRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.delete);
+            this.Controls.Add(this.edit);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -188,7 +188,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button edit;
+        private System.Windows.Forms.Button delete;
     }
 }

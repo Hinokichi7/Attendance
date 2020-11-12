@@ -17,7 +17,7 @@ namespace Attendance_APP.Admin
             
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void serch_Click(object sender, EventArgs e)
         {
             var employee = cmbEmployee1.GetSelectedEmployee();
             var startPoint = cmbDate1.GetSelectedPoint();
@@ -38,7 +38,7 @@ namespace Attendance_APP.Admin
         }
 
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void edit_Click_1(object sender, EventArgs e)
         {
             var x = new StampingDao().SetStampingDto(this.StampingTable);
             //foreach (DataGridViewRow r in dataGridView1.SelectedRows)
