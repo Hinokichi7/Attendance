@@ -23,5 +23,9 @@ C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance APP.cs
 C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance APP.exe
 C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance APP.pdb
 C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance_APP.AdminMenu.resources
-C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance_APP.EditRecord.resources
 C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance_APP.NewRecord.resources
+C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance_APP.CmbEmployee.resources
+C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance_APP.CmbDate.resources
+C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance_APP.Admin.EditRecord.resources
+C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance_APP.Contorol.CmbStampingType.resources
+C:\Users\user\source\repos\Attendance\Attendance APP\obj\Debug\Attendance_APP.Admin.EditRecordForm.resources

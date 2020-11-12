@@ -11,7 +11,7 @@ namespace Attendance_APP
     public partial class Stamping : Form
     {
         //ComboBoxにて表示・選択
-        private List<EmployeeDto> EmployeeList { get; set; }
+        //private List<EmployeeDto> EmployeeList { get; set; }
         private List<StampingTypeDto> StampingTypeList { get; set; }
         // 社員①の最新の打刻データ
         private StampingDto LatestStamping { get; set; }
@@ -22,10 +22,10 @@ namespace Attendance_APP
             this.StartPosition = FormStartPosition.CenterScreen;
 
             //cmbにて表示・選択
-            this.EmployeeList = new EmployeeDao().GetAllEmployee();
+            //this.EmployeeList = new EmployeeDao().GetAllEmployee();
             this.StampingTypeList = new StampingTypeDao().GetAllStampingType();
-            this.SetCmbEmployee();
-            this.SetCmbStampingType();
+            //this.SetCmbEmployee();
+            //this.SetCmbStampingType();
 
             // タイマー設定
             timer1.Interval = 1000;
@@ -33,50 +33,58 @@ namespace Attendance_APP
             // ラベル設定  
             //departmentName.Text = this.GetSelectedEmployeeDepartment().Name;
             currentTime.Text = this.GetCurrentTime();
+            this.cmbEmployee1.StatusUpdated += new EventHandler(MyEventHandlerFunction_StatusUpdated);
         }
-        
 
-        public void SetCmbEmployee()
+        public void MyEventHandlerFunction_StatusUpdated(object sender, EventArgs e)
         {
-            cmb_employee.DataSource = new EmployeeDao().GetAllEmployee();
-            cmb_employee.ValueMember = "Code";
-            cmb_employee.DisplayMember = "Name";
-            cmb_employee.SelectedIndex = -1;
-        }
-
-        private EmployeeDto GetSelectedEmployee()
-        {
-            if (cmb_employee.SelectedIndex == -1)
-            {
-                return null;
-            }
-            return this.EmployeeList.Find(employee => employee.Code == int.Parse(cmb_employee.SelectedValue.ToString()));
-        }
-
-        private void cmb_employee_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            var employee = this.GetSelectedEmployee();
-            if (employee != null)
-            {
-                departmentName.Text = new DepartmentDao().GetAllDepartment().Find(department => department.Code == employee.DepartmentCode).Name;
-                GetAttendanceOrLeaving();
-            }
+            this.GetAttendanceOrLeaving();
         }
 
 
-        // cmb_stampingTypeに設定・表示
-        private void SetCmbStampingType()
-        {
-            cmb_stampingType.DataSource = this.StampingTypeList;
-            cmb_stampingType.ValueMember = "StampingCode";
-            cmb_stampingType.DisplayMember = "StampingName";
-        }
+
+
+        //public void SetCmbEmployee()
+        //{
+        //    cmb_employee.DataSource = new EmployeeDao().GetAllEmployee();
+        //    cmb_employee.ValueMember = "Code";
+        //    cmb_employee.DisplayMember = "Name";
+        //    cmb_employee.SelectedIndex = -1;
+        //}
+
+        //private EmployeeDto GetSelectedEmployee()
+        //{
+        //    if (cmb_employee.SelectedIndex == -1)
+        //    {
+        //        return null;
+        //    }
+        //    return this.EmployeeList.Find(employee => employee.Code == int.Parse(cmb_employee.SelectedValue.ToString()));
+        //}
+
+        //private void cmb_employee_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    var employee = cmbEmployee1.GetSelectedEmployee();
+        //    if (employee != null)
+        //    {
+        //        departmentName.Text = new DepartmentDao().GetAllDepartment().Find(department => department.Code == employee.DepartmentCode).Name;
+        //        GetAttendanceOrLeaving();
+        //    }
+        //}
+
+
+        //// cmb_stampingTypeに設定・表示
+        //private void SetCmbStampingType()
+        //{
+        //    cmb_stampingType.DataSource = this.StampingTypeList;
+        //    cmb_stampingType.ValueMember = "StampingCode";
+        //    cmb_stampingType.DisplayMember = "StampingName";
+        //}
 
 
         private void GetAttendanceOrLeaving()
         {
             // DBより最新のデータ読み込み
-            this.LatestStamping = new StampingDao().GetLatestStamping(this.GetSelectedEmployee().Code);
+            this.LatestStamping = new StampingDao().GetLatestStamping(cmbEmployee1.GetSelectedEmployee().Code);
             // 新規(最新データがnull)であれば出勤画面
             // 既存で退勤時間が押されてあったら(退勤打刻が初期値でない)出勤画面
             if (this.LatestStamping == null || LatestStamping.LeavingWork.CompareTo(new DateTime()) != 0)
@@ -101,7 +109,7 @@ namespace Attendance_APP
         {
             // cmb_stampingTypeに設定・表示
             var list = new StampingTypeDao().GetAllStampingType();
-            cmb_stampingType.Text = list.Find(stampingType => stampingType.StampingCode == this.LatestStamping.StampingCode).StampingName;
+            cmbStampingType1.Text = list.Find(stampingType => stampingType.StampingCode == this.LatestStamping.StampingCode).StampingName;
             // 出勤ボタン不可
             stampBtn.Enabled = false;
         }
@@ -116,10 +124,10 @@ namespace Attendance_APP
         {
             currentTime.Text = this.GetCurrentTime();
         }
-        private StampingTypeDto GetSelectedStampingType()
-        {
-            return this.StampingTypeList.Find(stampingType => stampingType.StampingCode == int.Parse(cmb_stampingType.SelectedValue.ToString()));
-        }
+        //private StampingTypeDto GetSelectedStampingType()
+        //{
+        //    return this.StampingTypeList.Find(stampingType => stampingType.StampingCode == int.Parse(cmb_stampingType.SelectedValue.ToString()));
+        //}
 
         // 出勤打刻ボタン
         private void stampBtn_Click(object sender, EventArgs e)
@@ -130,13 +138,13 @@ namespace Attendance_APP
             TimeStamp.Text = GetCurrentTime();
             // 打刻データをStamping.Daoへ(追加)
             var dto = new StampingDto();
-            dto.EmployeeCode = this.GetSelectedEmployee().Code;
+            dto.EmployeeCode = cmbEmployee1.GetSelectedEmployee().Code;
             dto.CreateTime = DateTime.Now;
             dto.Year = DateTime.Now.Year;
             dto.Month = DateTime.Now.Month;
             dto.Day = DateTime.Now.Day;
             dto.Attendance = DateTime.Now;
-            dto.StampingCode = this.GetSelectedStampingType().StampingCode;
+            dto.StampingCode = cmbStampingType1.GetSelectedStampingType().StampingCode;
             new StampingDao().AddStamping(dto);
         }
 

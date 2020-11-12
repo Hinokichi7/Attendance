@@ -34,13 +34,12 @@
             this.stampBtn = new System.Windows.Forms.Button();
             this.TimeStamp = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.cmb_employee = new System.Windows.Forms.ComboBox();
+            this.cmbStampingType1 = new Attendance_APP.Contorol.CmbStampingType();
+            this.cmbEmployee1 = new Attendance_APP.CmbEmployee();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.departmentName = new System.Windows.Forms.Label();
-            this.cmb_stampingType = new System.Windows.Forms.ComboBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.StampBtn2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -97,13 +96,12 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.cmb_employee);
+            this.splitContainer1.Panel1.Controls.Add(this.cmbStampingType1);
+            this.splitContainer1.Panel1.Controls.Add(this.cmbEmployee1);
             this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
-            this.splitContainer1.Panel1.Controls.Add(this.departmentName);
-            this.splitContainer1.Panel1.Controls.Add(this.cmb_stampingType);
             this.splitContainer1.Panel1.Controls.Add(this.currentTime);
             this.splitContainer1.Panel1.Controls.Add(this.TimeStamp);
             // 
@@ -114,15 +112,19 @@
             this.splitContainer1.SplitterDistance = 386;
             this.splitContainer1.TabIndex = 6;
             // 
-            // cmb_employee
+            // cmbStampingType1
             // 
-            this.cmb_employee.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.cmb_employee.FormattingEnabled = true;
-            this.cmb_employee.Location = new System.Drawing.Point(93, 59);
-            this.cmb_employee.Name = "cmb_employee";
-            this.cmb_employee.Size = new System.Drawing.Size(148, 36);
-            this.cmb_employee.TabIndex = 11;
-            this.cmb_employee.SelectionChangeCommitted += new System.EventHandler(this.cmb_employee_SelectionChangeCommitted);
+            this.cmbStampingType1.Location = new System.Drawing.Point(149, 179);
+            this.cmbStampingType1.Name = "cmbStampingType1";
+            this.cmbStampingType1.Size = new System.Drawing.Size(104, 35);
+            this.cmbStampingType1.TabIndex = 13;
+            // 
+            // cmbEmployee1
+            // 
+            this.cmbEmployee1.Location = new System.Drawing.Point(149, 67);
+            this.cmbEmployee1.Name = "cmbEmployee1";
+            this.cmbEmployee1.Size = new System.Drawing.Size(147, 79);
+            this.cmbEmployee1.TabIndex = 12;
             // 
             // label4
             // 
@@ -163,25 +165,6 @@
             this.label1.Size = new System.Drawing.Size(50, 28);
             this.label1.TabIndex = 7;
             this.label1.Text = "氏名";
-            // 
-            // departmentName
-            // 
-            this.departmentName.AutoSize = true;
-            this.departmentName.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.departmentName.Location = new System.Drawing.Point(87, 116);
-            this.departmentName.Name = "departmentName";
-            this.departmentName.Size = new System.Drawing.Size(56, 31);
-            this.departmentName.TabIndex = 6;
-            this.departmentName.Text = "部署";
-            // 
-            // cmb_stampingType
-            // 
-            this.cmb_stampingType.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.cmb_stampingType.FormattingEnabled = true;
-            this.cmb_stampingType.Location = new System.Drawing.Point(124, 178);
-            this.cmb_stampingType.Name = "cmb_stampingType";
-            this.cmb_stampingType.Size = new System.Drawing.Size(105, 36);
-            this.cmb_stampingType.TabIndex = 5;
             // 
             // splitContainer2
             // 
@@ -245,12 +228,11 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Button StampBtn2;
-        private System.Windows.Forms.ComboBox cmb_stampingType;
-        private System.Windows.Forms.Label departmentName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cmb_employee;
+        private CmbEmployee cmbEmployee1;
+        private Contorol.CmbStampingType cmbStampingType1;
     }
 }

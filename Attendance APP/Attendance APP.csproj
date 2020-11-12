@@ -46,8 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CmbEmployee.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Admin\EditRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\EditRecord.Designer.cs">
+      <DependentUpon>EditRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Contorol\EditRecordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contorol\EditRecordForm.Designer.cs">
+      <DependentUpon>EditRecordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Admin\NewRecord.cs">
       <SubType>Form</SubType>
@@ -55,6 +64,25 @@
     <Compile Include="Admin\NewRecord.Designer.cs">
       <DependentUpon>NewRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Contorol\CmbDate.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Contorol\CmbDate.Designer.cs">
+      <DependentUpon>CmbDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Contorol\CmbEmployee.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Contorol\CmbEmployee.Designer.cs">
+      <DependentUpon>CmbEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Contorol\CmbStampingType.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Contorol\CmbStampingType.Designer.cs">
+      <DependentUpon>CmbStampingType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Util\SelectEmployee.cs" />
     <Compile Include="Util\WorkingHours.cs" />
     <Compile Include="Dao\DepartmentDao.cs" />
     <Compile Include="Dao\StampingTypeDao.cs" />
@@ -70,12 +98,6 @@
     </Compile>
     <Compile Include="Admin\AdminMenu.Designer.cs">
       <DependentUpon>AdminMenu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\EditRecord.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Admin\EditRecord.Designer.cs">
-      <DependentUpon>EditRecord.cs</DependentUpon>
     </Compile>
     <Compile Include="ForOutput.cs">
       <SubType>Form</SubType>
@@ -106,6 +128,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\NewRecord.resx">
       <DependentUpon>NewRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contorol\CmbDate.resx">
+      <DependentUpon>CmbDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contorol\CmbEmployee.resx">
+      <DependentUpon>CmbEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contorol\CmbStampingType.resx">
+      <DependentUpon>CmbStampingType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contorol\EditRecordForm.resx">
+      <DependentUpon>EditRecordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ForOutput.resx">
       <DependentUpon>ForOutput.cs</DependentUpon>

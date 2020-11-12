@@ -8,7 +8,7 @@ namespace Attendance_APP.Dao
 {
     class StampingDao : Dao
     {
-        private List<StampingDto> SetStampingDto(DataTable dt)
+        public List<StampingDto> SetStampingDto(DataTable dt)
         {
             var list = new List<StampingDto>();
             foreach (DataRow dr in dt.Rows)
@@ -123,7 +123,7 @@ namespace Attendance_APP.Dao
         {
             // 出勤打刻
             using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping(createTime, employeeCode, year, month, day, attendance, stampingCode) VALUES(@createTime, @employeeCode,@year, @month, @day,@attendance,@stampingCode)", conn))
+            using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping (createTime, employeeCode, year, month, day, attendance, stampingCode) VALUES(@createTime, @employeeCode,@year, @month, @day,@attendance,@stampingCode)", conn))
             {
                 conn.Open();
 
@@ -162,7 +162,7 @@ namespace Attendance_APP.Dao
         {
             // 新規追加(管理)
             using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping(createTime, employeeCode, year, month, day, attendance, leavingwork, stampingCode, workingHours, remark) VALUES(@createTime, @employeeCode, @year, @month, @day, @attendance, @leavingWork, @stampingCode, @workingHours, @remark)", conn))
+            using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping (createTime, employeeCode, year, month, day, attendance, leavingwork, stampingCode, workingHours, remark) VALUES(@createTime, @employeeCode, @year, @month, @day, @attendance, @leavingWork, @stampingCode, @workingHours, @remark)", conn))
             {
                 conn.Open();
 
@@ -179,6 +179,23 @@ namespace Attendance_APP.Dao
 
                 cmd.ExecuteNonQuery();
 
+            }
+        }
+
+        public DataTable GetAllStamping(int employeeCode, string startPoint, string endPoint)
+        {
+            // 社員を指定して最新の打刻データを読み込み
+            var dt = new DataTable();
+            using (var conn = GetConnection())
+            using (var cmd = new SqlCommand("SELECT year, month, day, FORMAT(attendance, 'HH:mm') as attemdance, FORMAT(leavingWork, 'HH:mm') as leavingWork, x.stampingCode, stampingName, workingHours, remark FROM Attendance.dbo.Stamping as x, Attendance.dbo.StampingType as y WHERE x.stampingCode = y.stampingCode AND employeeCode = @employeeCode AND attendance BETWEEN @startPoint AND @endPoint", conn))
+            {
+                cmd.Parameters.AddWithValue("@employeeCode", employeeCode);
+                cmd.Parameters.AddWithValue("@startPoint", startPoint);
+                cmd.Parameters.AddWithValue("@endPoint", endPoint);
+                conn.Open();
+                var adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+                    return dt;
             }
         }
     }

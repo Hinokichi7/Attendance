@@ -1,5 +1,4 @@
-﻿using Attendance_APP.Contorol;
-using Attendance_APP.Dao;
+﻿using Attendance_APP.Dao;
 using Attendance_APP.Dto;
 using Attendance_APP.Util;
 using System;
@@ -7,29 +6,41 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Attendance_APP
+namespace Attendance_APP.Admin
 {
-    public partial class NewRecord : Form
+    public partial class EditRecordForm : Form
     {
-        public NewRecord()
+        private EmployeeDto employee;
+
+        public EditRecordForm(EmployeeDto employee, StampingDto stamping)
         {
             InitializeComponent();
-
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.InitializeCmbBox();
+            this.employee = employee;
+            label1.Text = this.employee.Name;
+            this.InitializeText(stamping);
         }
 
-        private void InitializeCmbBox()
+        private (int startHour, int startMinut, int endHour, int emdMinut) GetTime(StampingDto stamping)
         {
-            this.SetCmbBoxTime(cmb_startHour, 1, 24, 8);
-            this.SetCmbBoxTime(cmb_startMinut, 0, 59, 0);
-            this.SetCmbBoxTime(cmb_endHour, 1, 24, 17);
-            this.SetCmbBoxTime(cmb_endMinut, 0, 59, 0);
+            return (stamping.Attendance.Hour, stamping.Attendance.Minute, stamping.LeavingWork.Hour, stamping.LeavingWork.Minute);
+        }
+
+        private void InitializeText(StampingDto stamping)
+        {
+            cmbDate1.GetSelectedValue2(stamping);
+            cmbStampingType1.GetSelectedValue2(stamping);
+            this.SetCmbBoxTime(cmb_startHour, 1, 24, GetTime(stamping).startHour);
+            this.SetCmbBoxTime(cmb_startMinut, 0, 59, GetTime(stamping).startMinut);
+            this.SetCmbBoxTime(cmb_endHour, 1, 24, GetTime(stamping).endHour);
+            this.SetCmbBoxTime(cmb_endMinut, 0, 59, GetTime(stamping).emdMinut);
+            remark.Text = stamping.Remark;
         }
 
         private DateTime GetStampingTime(ComboBox cmbHour, ComboBox cmbmMinut)
@@ -43,15 +54,16 @@ namespace Attendance_APP
             {
                 cmb.Items.Add(i);
             }
-            cmb.SelectedIndex = ix;
+            //cmb.SelectedIndex = ix;
+            cmb.Text = ix.ToString();
             cmb.FormatString = "00";
         }
 
         private void AddNewRecord_Click_1(object sender, EventArgs e)
         {
             var dto = new StampingDto();
-            dto.EmployeeCode = cmbEmployee1.GetSelectedEmployee().Code;
-            dto.CreateTime = DateTime.Now;
+            dto.EmployeeCode = this.employee.Code;
+            dto.UpdateTime = DateTime.Now;
             dto.Year = cmbDate1.GetSelectedValue().year;
             dto.Month = cmbDate1.GetSelectedValue().month;
             dto.Day = cmbDate1.GetSelectedValue().day;

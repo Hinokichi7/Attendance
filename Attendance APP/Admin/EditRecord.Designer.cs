@@ -1,4 +1,4 @@
-﻿namespace Attendance_APP
+﻿namespace Attendance_APP.Admin
 {
     partial class EditRecord
     {
@@ -28,31 +28,167 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.class11 = new Attendance_APP.CmbEmployee();
+            this.search = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.cmbDate2 = new Attendance_APP.CmbDate();
+            this.cmbEmployee1 = new Attendance_APP.CmbEmployee();
+            this.cmbDate1 = new Attendance_APP.CmbDate();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // class11
+            // search
             // 
-            this.class11.FormattingEnabled = true;
-            this.class11.Location = new System.Drawing.Point(267, 151);
-            this.class11.Name = "class11";
-            this.class11.Size = new System.Drawing.Size(121, 20);
-            this.class11.TabIndex = 0;
+            this.search.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.search.Location = new System.Drawing.Point(675, 126);
+            this.search.Name = "search";
+            this.search.Size = new System.Drawing.Size(75, 23);
+            this.search.TabIndex = 4;
+            this.search.Text = "検索";
+            this.search.UseVisualStyleBackColor = true;
+            this.search.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("メイリオ", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label1.Location = new System.Drawing.Point(12, 40);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 23);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "氏名";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("メイリオ", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label2.Location = new System.Drawing.Point(12, 63);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 23);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "部署名";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("メイリオ", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label9.Location = new System.Drawing.Point(12, 111);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(55, 23);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "年月日";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("メイリオ", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label3.Location = new System.Drawing.Point(357, 111);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(25, 23);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "ー";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(150, 182);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(0, 12);
+            this.label4.TabIndex = 14;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 155);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 21;
+            this.dataGridView1.Size = new System.Drawing.Size(760, 243);
+            this.dataGridView1.TabIndex = 15;
+            // 
+            // cmbDate2
+            // 
+            this.cmbDate2.Location = new System.Drawing.Point(388, 111);
+            this.cmbDate2.Name = "cmbDate2";
+            this.cmbDate2.Size = new System.Drawing.Size(281, 38);
+            this.cmbDate2.TabIndex = 12;
+            // 
+            // cmbEmployee1
+            // 
+            this.cmbEmployee1.Location = new System.Drawing.Point(73, 26);
+            this.cmbEmployee1.Name = "cmbEmployee1";
+            this.cmbEmployee1.Size = new System.Drawing.Size(147, 79);
+            this.cmbEmployee1.TabIndex = 11;
+            // 
+            // cmbDate1
+            // 
+            this.cmbDate1.Location = new System.Drawing.Point(73, 111);
+            this.cmbDate1.Name = "cmbDate1";
+            this.cmbDate1.Size = new System.Drawing.Size(281, 38);
+            this.cmbDate1.TabIndex = 10;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(572, 415);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "編集";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(675, 415);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 17;
+            this.button2.Text = "削除";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // EditRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.class11);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cmbDate2);
+            this.Controls.Add(this.cmbEmployee1);
+            this.Controls.Add(this.cmbDate1);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.search);
             this.Name = "EditRecord";
-            this.Text = "編集";
+            this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private CmbEmployee class11;
+        private System.Windows.Forms.Button search;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label9;
+        private CmbDate cmbDate1;
+        private CmbEmployee cmbEmployee1;
+        private CmbDate cmbDate2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
