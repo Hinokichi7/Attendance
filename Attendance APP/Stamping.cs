@@ -126,7 +126,9 @@ namespace Attendance_APP
         }
         //private StampingTypeDto GetSelectedStampingType()
         //{
-        //    return this.StampingTypeList.Find(stampingType => stampingType.StampingCode == int.Parse(cmb_stampingType.SelectedValue.ToString()));
+        //    //return this.StampingTypeList.Find(stampingType => stampingType.StampingCode == int.Parse(cmb_stampingType.SelectedValue.ToString()));
+        //    return this.StampingTypeList.Find(stampingType => stampingType.StampingCode == this.LatestStamping.StampingCode);
+
         //}
 
         // 出勤打刻ボタン
