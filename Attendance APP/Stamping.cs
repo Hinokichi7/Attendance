@@ -42,45 +42,6 @@ namespace Attendance_APP
         }
 
 
-
-
-        //public void SetCmbEmployee()
-        //{
-        //    cmb_employee.DataSource = new EmployeeDao().GetAllEmployee();
-        //    cmb_employee.ValueMember = "Code";
-        //    cmb_employee.DisplayMember = "Name";
-        //    cmb_employee.SelectedIndex = -1;
-        //}
-
-        //private EmployeeDto GetSelectedEmployee()
-        //{
-        //    if (cmb_employee.SelectedIndex == -1)
-        //    {
-        //        return null;
-        //    }
-        //    return this.EmployeeList.Find(employee => employee.Code == int.Parse(cmb_employee.SelectedValue.ToString()));
-        //}
-
-        //private void cmb_employee_SelectionChangeCommitted(object sender, EventArgs e)
-        //{
-        //    var employee = cmbEmployee1.GetSelectedEmployee();
-        //    if (employee != null)
-        //    {
-        //        departmentName.Text = new DepartmentDao().GetAllDepartment().Find(department => department.Code == employee.DepartmentCode).Name;
-        //        GetAttendanceOrLeaving();
-        //    }
-        //}
-
-
-        //// cmb_stampingTypeに設定・表示
-        //private void SetCmbStampingType()
-        //{
-        //    cmb_stampingType.DataSource = this.StampingTypeList;
-        //    cmb_stampingType.ValueMember = "StampingCode";
-        //    cmb_stampingType.DisplayMember = "StampingName";
-        //}
-
-
         private void GetAttendanceOrLeaving()
         {
             // DBより最新のデータ読み込み
@@ -108,8 +69,7 @@ namespace Attendance_APP
         private void StampingLeaving()
         {
             // cmb_stampingTypeに設定・表示
-            var list = new StampingTypeDao().GetAllStampingType();
-            cmbStampingType1.Text = list.Find(stampingType => stampingType.StampingCode == this.LatestStamping.StampingCode).StampingName;
+            cmbStampingType1.Text = this.StampingTypeList.Find(stampingType => stampingType.StampingCode == this.LatestStamping.StampingCode).StampingName;
             // 出勤ボタン不可
             stampBtn.Enabled = false;
         }
@@ -124,12 +84,6 @@ namespace Attendance_APP
         {
             currentTime.Text = this.GetCurrentTime();
         }
-        //private StampingTypeDto GetSelectedStampingType()
-        //{
-        //    //return this.StampingTypeList.Find(stampingType => stampingType.StampingCode == int.Parse(cmb_stampingType.SelectedValue.ToString()));
-        //    return this.StampingTypeList.Find(stampingType => stampingType.StampingCode == this.LatestStamping.StampingCode);
-
-        //}
 
         // 出勤打刻ボタン
         private void stampBtn_Click(object sender, EventArgs e)

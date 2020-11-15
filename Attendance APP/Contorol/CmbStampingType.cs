@@ -28,7 +28,7 @@ namespace Attendance_APP.Contorol
             cmb_stampingType.DataSource = new StampingTypeDao().GetAllStampingType();
             cmb_stampingType.ValueMember = "StampingCode";
             cmb_stampingType.DisplayMember = "StampingName";
-            cmb_stampingType.SelectedIndex = -1;
+            //cmb_stampingType.SelectedIndex = -1;
         }
 
         public StampingTypeDto GetSelectedStampingType()

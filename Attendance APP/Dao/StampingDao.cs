@@ -182,6 +182,30 @@ namespace Attendance_APP.Dao
             }
         }
 
+        public void AddEditRecord(StampingDto dto)
+        {
+            // 新規追加(管理)
+            using (var conn = GetConnection())
+            using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping (updateTime, employeeCode, year, month, day, attendance, leavingwork, stampingCode, workingHours, remark) VALUES(@updateTime, @employeeCode, @year, @month, @day, @attendance, @leavingWork, @stampingCode, @workingHours, @remark)", conn))
+            {
+                conn.Open();
+
+                cmd.Parameters.AddWithValue("@updateTime", dto.CreateTime);
+                cmd.Parameters.AddWithValue("@employeeCode", dto.EmployeeCode);
+                cmd.Parameters.AddWithValue("@year", dto.Year);
+                cmd.Parameters.AddWithValue("@month", dto.Month);
+                cmd.Parameters.AddWithValue("@day", dto.Day);
+                cmd.Parameters.AddWithValue("@attendance", dto.Attendance);
+                cmd.Parameters.AddWithValue("@leavingWork", dto.LeavingWork);
+                cmd.Parameters.AddWithValue("@stampingCode", dto.StampingCode);
+                cmd.Parameters.AddWithValue("@workingHours", dto.WorkingHours);
+                cmd.Parameters.AddWithValue("@remark", dto.Remark);
+
+                cmd.ExecuteNonQuery();
+
+            }
+        }
+
         public DataTable GetAllStamping(int employeeCode, string startPoint, string endPoint)
         {
             // 社員を指定して最新の打刻データを読み込み

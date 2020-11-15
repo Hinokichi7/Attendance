@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.remark = new System.Windows.Forms.TextBox();
-            this.AddNewRecord = new System.Windows.Forms.Button();
+            this.AddEditRecord = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -55,15 +55,16 @@
             this.remark.Size = new System.Drawing.Size(276, 25);
             this.remark.TabIndex = 22;
             // 
-            // AddNewRecord
+            // AddEditRecord
             // 
-            this.AddNewRecord.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.AddNewRecord.Location = new System.Drawing.Point(168, 272);
-            this.AddNewRecord.Name = "AddNewRecord";
-            this.AddNewRecord.Size = new System.Drawing.Size(123, 32);
-            this.AddNewRecord.TabIndex = 21;
-            this.AddNewRecord.Text = "更新";
-            this.AddNewRecord.UseVisualStyleBackColor = true;
+            this.AddEditRecord.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.AddEditRecord.Location = new System.Drawing.Point(168, 272);
+            this.AddEditRecord.Name = "AddEditRecord";
+            this.AddEditRecord.Size = new System.Drawing.Size(123, 32);
+            this.AddEditRecord.TabIndex = 21;
+            this.AddEditRecord.Text = "更新";
+            this.AddEditRecord.UseVisualStyleBackColor = true;
+            this.AddEditRecord.Click += new System.EventHandler(this.AddEditRecord_Click);
             // 
             // label5
             // 
@@ -214,7 +215,7 @@
             this.Controls.Add(this.cmbStampingType1);
             this.Controls.Add(this.cmbDate1);
             this.Controls.Add(this.remark);
-            this.Controls.Add(this.AddNewRecord);
+            this.Controls.Add(this.AddEditRecord);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
@@ -239,7 +240,7 @@
         private Contorol.CmbStampingType cmbStampingType1;
         private CmbDate cmbDate1;
         private System.Windows.Forms.TextBox remark;
-        private System.Windows.Forms.Button AddNewRecord;
+        private System.Windows.Forms.Button AddEditRecord;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;

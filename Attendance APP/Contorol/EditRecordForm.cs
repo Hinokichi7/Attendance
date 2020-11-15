@@ -43,9 +43,10 @@ namespace Attendance_APP.Admin
             remark.Text = stamping.Remark;
         }
 
-        private DateTime GetStampingTime(ComboBox cmbHour, ComboBox cmbmMinut)
+        private DateTime GetStampingTime(int hour, int minute)
         {
-            return DateTime.Parse(string.Format($"{cmbDate1.GetSelectedValue().year:d4}/{cmbDate1.GetSelectedValue().month:d2}/{cmbDate1.GetSelectedValue().day:d2} {cmbHour.SelectedItem:d2}:{cmbmMinut.SelectedItem:d2}:00"));
+            var date = cmbDate1.GetSelectedValue();
+            return DateTime.Parse(string.Format($"{date.year:d4}/{date.month:d2}/{date.day:d2} {hour:d2}:{minute:d2}:00"));
         }
 
         private void SetCmbBoxTime(ComboBox cmb, int n, int max, int ix)
@@ -59,7 +60,8 @@ namespace Attendance_APP.Admin
             cmb.FormatString = "00";
         }
 
-        private void AddNewRecord_Click_1(object sender, EventArgs e)
+
+        private void AddEditRecord_Click(object sender, EventArgs e)
         {
             var dto = new StampingDto();
             dto.EmployeeCode = this.employee.Code;
@@ -67,16 +69,21 @@ namespace Attendance_APP.Admin
             dto.Year = cmbDate1.GetSelectedValue().year;
             dto.Month = cmbDate1.GetSelectedValue().month;
             dto.Day = cmbDate1.GetSelectedValue().day;
-            dto.Attendance = this.GetStampingTime(cmb_startHour, cmb_startMinut);
-            dto.LeavingWork = this.GetStampingTime(cmb_endHour, cmb_endMinut);
+            var startHour = (int)cmb_startHour.SelectedValue;
+            var startMinute = (int)cmb_startMinut.SelectedValue;
+            var endHour = (int)cmb_endHour.SelectedValue;
+            var endMinute = (int)cmb_endMinut.SelectedValue;
+
+            dto.Attendance = this.GetStampingTime(startHour, startMinute);
+            dto.LeavingWork = this.GetStampingTime(endHour, endMinute);
             dto.StampingCode = cmbStampingType1.GetSelectedStampingType().StampingCode;
             // 出勤時間、退勤時間を取得(丸め無し)
-            var startTime = new WorkingHours().GetStartTime(this.GetStampingTime(cmb_startHour, cmb_startMinut));
-            var endTime = new WorkingHours().GetEndTime(this.GetStampingTime(cmb_endHour, cmb_endMinut));
+            var startTime = new WorkingHours().GetStartTime(this.GetStampingTime(startHour, startMinute));
+            var endTime = new WorkingHours().GetEndTime(this.GetStampingTime(endHour, endMinute));
             // 労働時間
             dto.WorkingHours = new WorkingHours().GetWorkingHours(startTime, endTime);
             dto.Remark = remark.Text;
-            new StampingDao().AddNewRecord(dto);
+            new StampingDao().AddEditRecord(dto);
             this.Close();
         }
     }
