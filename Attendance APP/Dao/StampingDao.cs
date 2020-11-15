@@ -182,16 +182,17 @@ namespace Attendance_APP.Dao
             }
         }
 
-        public void AddEditRecord(StampingDto dto)
+        public void UpdateEditRecord(StampingDto dto)
         {
             // 新規追加(管理)
             using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("INSERT INTO Attendance.dbo.Stamping (updateTime, employeeCode, year, month, day, attendance, leavingwork, stampingCode, workingHours, remark) VALUES(@updateTime, @employeeCode, @year, @month, @day, @attendance, @leavingWork, @stampingCode, @workingHours, @remark)", conn))
+            using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET updateTime = @updateTime, year = @year, month = @month, day = @day, attendance = @attendance, leavingwork = @leavingwork, stampingCode = @stampingCode, workingHours = @workingHours, remark = @remark WHERE id = @id", conn))
             {
                 conn.Open();
 
-                cmd.Parameters.AddWithValue("@updateTime", dto.CreateTime);
-                cmd.Parameters.AddWithValue("@employeeCode", dto.EmployeeCode);
+                cmd.Parameters.AddWithValue("@id", dto.Id);
+                cmd.Parameters.AddWithValue("@updateTime", dto.UpdateTime);
+                //cmd.Parameters.AddWithValue("@employeeCode", dto.EmployeeCode);
                 cmd.Parameters.AddWithValue("@year", dto.Year);
                 cmd.Parameters.AddWithValue("@month", dto.Month);
                 cmd.Parameters.AddWithValue("@day", dto.Day);

@@ -69,10 +69,10 @@ namespace Attendance_APP.Admin
             dto.Year = cmbDate1.GetSelectedValue().year;
             dto.Month = cmbDate1.GetSelectedValue().month;
             dto.Day = cmbDate1.GetSelectedValue().day;
-            var startHour = (int)cmb_startHour.SelectedValue;
-            var startMinute = (int)cmb_startMinut.SelectedValue;
-            var endHour = (int)cmb_endHour.SelectedValue;
-            var endMinute = (int)cmb_endMinut.SelectedValue;
+            var startHour = (int)cmb_startHour.SelectedItem;
+            var startMinute = (int)cmb_startMinut.SelectedItem;
+            var endHour = (int)cmb_endHour.SelectedItem;
+            var endMinute = (int)cmb_endMinut.SelectedItem;
 
             dto.Attendance = this.GetStampingTime(startHour, startMinute);
             dto.LeavingWork = this.GetStampingTime(endHour, endMinute);
@@ -83,7 +83,7 @@ namespace Attendance_APP.Admin
             // 労働時間
             dto.WorkingHours = new WorkingHours().GetWorkingHours(startTime, endTime);
             dto.Remark = remark.Text;
-            new StampingDao().AddEditRecord(dto);
+            new StampingDao().UpdateEditRecord(dto);
             this.Close();
         }
     }
