@@ -17,30 +17,32 @@ namespace Attendance_APP.Admin
     public partial class EditRecordForm : Form
     {
         private EmployeeDto employee;
+        private StampingDto Stamping { get; set; }
 
         public EditRecordForm(EmployeeDto employee, StampingDto stamping)
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             this.employee = employee;
+            this.Stamping = stamping;
             label1.Text = this.employee.Name;
-            this.InitializeText(stamping);
+            this.InitializeText();
         }
 
-        private (int startHour, int startMinut, int endHour, int emdMinut) GetTime(StampingDto stamping)
+        private (int startHour, int startMinut, int endHour, int emdMinut) GetTime()
         {
-            return (stamping.Attendance.Hour, stamping.Attendance.Minute, stamping.LeavingWork.Hour, stamping.LeavingWork.Minute);
+            return (this.Stamping.Attendance.Hour, this.Stamping.Attendance.Minute, this.Stamping.LeavingWork.Hour, this.Stamping.LeavingWork.Minute);
         }
 
-        private void InitializeText(StampingDto stamping)
+        private void InitializeText()
         {
-            cmbDate1.GetSelectedValue2(stamping);
-            cmbStampingType1.GetSelectedValue2(stamping);
-            this.SetCmbBoxTime(cmb_startHour, 1, 24, GetTime(stamping).startHour);
-            this.SetCmbBoxTime(cmb_startMinut, 0, 59, GetTime(stamping).startMinut);
-            this.SetCmbBoxTime(cmb_endHour, 1, 24, GetTime(stamping).endHour);
-            this.SetCmbBoxTime(cmb_endMinut, 0, 59, GetTime(stamping).emdMinut);
-            remark.Text = stamping.Remark;
+            cmbDate1.GetSelectedValue2(this.Stamping);
+            cmbStampingType1.GetSelectedValue2(this.Stamping);
+            this.SetCmbBoxTime(cmb_startHour, 1, 24, GetTime().startHour);
+            this.SetCmbBoxTime(cmb_startMinut, 0, 59, GetTime().startMinut);
+            this.SetCmbBoxTime(cmb_endHour, 1, 24, GetTime().endHour);
+            this.SetCmbBoxTime(cmb_endMinut, 0, 59, GetTime().emdMinut);
+            remark.Text = this.Stamping.Remark;
         }
 
         private DateTime GetStampingTime(int hour, int minute)
@@ -64,16 +66,17 @@ namespace Attendance_APP.Admin
         private void AddEditRecord_Click(object sender, EventArgs e)
         {
             var dto = new StampingDto();
+            dto.Id = this.Stamping.Id;
             dto.EmployeeCode = this.employee.Code;
             dto.UpdateTime = DateTime.Now;
             dto.Year = cmbDate1.GetSelectedValue().year;
             dto.Month = cmbDate1.GetSelectedValue().month;
             dto.Day = cmbDate1.GetSelectedValue().day;
+
             var startHour = (int)cmb_startHour.SelectedItem;
             var startMinute = (int)cmb_startMinut.SelectedItem;
             var endHour = (int)cmb_endHour.SelectedItem;
             var endMinute = (int)cmb_endMinut.SelectedItem;
-
             dto.Attendance = this.GetStampingTime(startHour, startMinute);
             dto.LeavingWork = this.GetStampingTime(endHour, endMinute);
             dto.StampingCode = cmbStampingType1.GetSelectedStampingType().StampingCode;

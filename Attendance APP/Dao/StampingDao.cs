@@ -184,7 +184,7 @@ namespace Attendance_APP.Dao
 
         public void UpdateEditRecord(StampingDto dto)
         {
-            // 新規追加(管理)
+            // 更新(管理)
             using (var conn = GetConnection())
             using (var cmd = new SqlCommand("UPDATE Attendance.dbo.Stamping SET updateTime = @updateTime, year = @year, month = @month, day = @day, attendance = @attendance, leavingwork = @leavingwork, stampingCode = @stampingCode, workingHours = @workingHours, remark = @remark WHERE id = @id", conn))
             {
