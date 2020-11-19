@@ -30,6 +30,10 @@ namespace Attendance_APP.Contorol
             cmb_stampingType.DisplayMember = "StampingName";
             //cmb_stampingType.SelectedIndex = -1;
         }
+        public void SetLatestStampingType(StampingDto latestStamping)
+        {
+            cmb_stampingType.Text = new StampingTypeDao().GetAllStampingType().Find(stampingType => stampingType.StampingCode == latestStamping.StampingCode).StampingName;
+        }
 
         public StampingTypeDto GetSelectedStampingType()
         {

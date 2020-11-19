@@ -52,10 +52,10 @@
     <Compile Include="Admin\EditRecord.Designer.cs">
       <DependentUpon>EditRecord.cs</DependentUpon>
     </Compile>
-    <Compile Include="Contorol\EditRecordForm.cs">
+    <Compile Include="Admin\EditRecordForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Contorol\EditRecordForm.Designer.cs">
+    <Compile Include="Admin\EditRecordForm.Designer.cs">
       <DependentUpon>EditRecordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Admin\NewRecord.cs">
@@ -138,7 +138,7 @@
     <EmbeddedResource Include="Contorol\CmbStampingType.resx">
       <DependentUpon>CmbStampingType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Contorol\EditRecordForm.resx">
+    <EmbeddedResource Include="Admin\EditRecordForm.resx">
       <DependentUpon>EditRecordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ForOutput.resx">

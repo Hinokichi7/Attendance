@@ -69,7 +69,7 @@ namespace Attendance_APP
         private void StampingLeaving()
         {
             // cmb_stampingTypeに設定・表示
-            cmbStampingType1.Text = this.StampingTypeList.Find(stampingType => stampingType.StampingCode == this.LatestStamping.StampingCode).StampingName;
+            cmbStampingType1.SetLatestStampingType(this.LatestStamping);
             // 出勤ボタン不可
             stampBtn.Enabled = false;
         }

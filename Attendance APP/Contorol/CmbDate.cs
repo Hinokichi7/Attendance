@@ -34,6 +34,21 @@ namespace Attendance_APP
             cmb.DisplayMember = "Year";
             cmb.SelectedIndex = 0;
         }
+        public void SetCmbYear2(ComboBox cmb)
+        {
+            var tarm = 10;
+            var years = new List<int>(tarm);
+            var startYear = int.Parse(DateTime.Now.AddYears(-10).ToString());
+            var endYear = int.Parse(DateTime.Now.AddYears(1).ToString());
+            for (var i = startYear; i < endYear; i++)
+            {
+                years[i] = i;
+            }
+
+            cmb.DataSource = years;
+            cmb.ValueMember = years.ToString();
+            cmb.DisplayMember = years.ToString();
+        }
 
         // 1からmaxまでの数値をcmb.Itemに追加
         public void SetCmbBox(ComboBox cmb, int max)
