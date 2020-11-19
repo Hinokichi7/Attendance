@@ -23,7 +23,7 @@ namespace Attendance_APP
         private void InitializeCmbBox()
         {
             // cmbに設定・表示
-            this.SetCmbYear(cmb_year);
+            this.SetCmbYear2(cmb_year);
             this.SetCmbBox(cmb_month, 12);
         }
 
@@ -36,18 +36,16 @@ namespace Attendance_APP
         }
         public void SetCmbYear2(ComboBox cmb)
         {
-            var tarm = 10;
-            var years = new List<int>(tarm);
-            var startYear = int.Parse(DateTime.Now.AddYears(-10).ToString());
-            var endYear = int.Parse(DateTime.Now.AddYears(1).ToString());
+            //var tarm = 10;
+            //var years = new List<int>(tarm);
+            var startYear = int.Parse(DateTime.Now.AddYears(-10).Year.ToString());
+            var endYear = int.Parse(DateTime.Now.AddYears(1).Year.ToString());
             for (var i = startYear; i < endYear; i++)
             {
-                years[i] = i;
+                cmb.Items.Add(i);
             }
+            cmb.SelectedIndex = 0;
 
-            cmb.DataSource = years;
-            cmb.ValueMember = years.ToString();
-            cmb.DisplayMember = years.ToString();
         }
 
         // 1からmaxまでの数値をcmb.Itemに追加
@@ -64,10 +62,10 @@ namespace Attendance_APP
         // 日付候補を取得
         private void SetCmbBoxDay(ComboBox cmb_year, ComboBox cmb_month, ComboBox cmb_day)
         {
-            if (cmb_year.SelectedValue != null && cmb_month.SelectedItem != null)
+            if (cmb_year.SelectedItem != null && cmb_month.SelectedItem != null)
             {
                 cmb_day.Items.Clear();
-                var maxDay = DateTime.DaysInMonth((int)cmb_year.SelectedValue, (int)cmb_month.SelectedItem);
+                var maxDay = DateTime.DaysInMonth((int)cmb_year.SelectedItem, (int)cmb_month.SelectedItem);
 
                 this.SetCmbBox(cmb_day, maxDay);
             }
@@ -90,12 +88,12 @@ namespace Attendance_APP
         
         public string GetSelectedPoint()
         {
-            return $"{(int)cmb_year.SelectedValue}-{(int)cmb_month.SelectedItem:d2}-{(int)cmb_day.SelectedItem:d2}";
+            return $"{(int)cmb_year.SelectedItem}-{(int)cmb_month.SelectedItem:d2}-{(int)cmb_day.SelectedItem:d2}";
         }
 
         public (int year, int month, int day) GetSelectedValue()
         {
-            return ((int)cmb_year.SelectedValue, (int)cmb_month.SelectedItem, (int)cmb_day.SelectedItem);
+            return ((int)cmb_year.SelectedItem, (int)cmb_month.SelectedItem, (int)cmb_day.SelectedItem);
         }
 
         public void GetSelectedValue2(StampingDto stamping)
