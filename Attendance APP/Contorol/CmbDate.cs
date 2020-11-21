@@ -83,7 +83,7 @@ namespace Attendance_APP
 
         public DateTime GetSelectedDate()
         {
-            return DateTime.Parse(string.Format($"{cmb_year.SelectedValue:d4}/{cmb_month.SelectedItem:d2}/{cmb_day.SelectedItem:d2} 00:00:00"));
+            return DateTime.Parse(string.Format($"{cmb_year.SelectedItem:d4}/{cmb_month.SelectedItem:d2}/{cmb_day.SelectedItem:d2} 00:00:00"));
         }
         
         public string GetSelectedPoint()
