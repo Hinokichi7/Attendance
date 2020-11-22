@@ -212,7 +212,7 @@ namespace Attendance_APP.Dao
             // 社員を指定して最新の打刻データを読み込み
             var dt = new DataTable();
             using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("SELECT year, month, day, FORMAT(attendance, 'HH:mm') as attendance, FORMAT(leavingWork, 'HH:mm') as leavingWork, x.stampingCode, stampingName, workingHours, remark FROM Attendance.dbo.Stamping as x, Attendance.dbo.StampingType as y WHERE x.stampingCode = y.stampingCode AND employeeCode = @employeeCode AND attendance BETWEEN @startPoint AND @endPoint", conn))
+            using (var cmd = new SqlCommand("SELECT x.id, year, month, day, FORMAT(attendance, 'HH:mm') as attendance, FORMAT(leavingWork, 'HH:mm') as leavingWork, x.stampingCode, stampingName, workingHours, remark FROM Attendance.dbo.Stamping as x, Attendance.dbo.StampingType as y WHERE x.stampingCode = y.stampingCode AND employeeCode = @employeeCode AND attendance BETWEEN @startPoint AND @endPoint", conn))
             {
                 cmd.Parameters.AddWithValue("@employeeCode", employeeCode);
                 cmd.Parameters.AddWithValue("@startPoint", startPoint);
@@ -220,7 +220,7 @@ namespace Attendance_APP.Dao
                 conn.Open();
                 var adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
-                    return dt;
+                return dt;
             }
         }
     }

@@ -17,7 +17,8 @@ namespace Attendance_APP.Admin
             
         }
 
-        private void serch_Click(object sender, EventArgs e)
+
+        private void SetGredView()
         {
             var employee = cmbEmployee1.GetSelectedEmployee();
             var startPoint = cmbDate1.GetSelectedPoint();
@@ -37,14 +38,28 @@ namespace Attendance_APP.Admin
             }
         }
 
+        private void serch_Click(object sender, EventArgs e)
+        {
+            this.SetGredView();
+        }
+
 
         private void edit_Click_1(object sender, EventArgs e)
         {
-            var x = new StampingDao().SetStampingDto(this.StampingTable);
-            //foreach (DataGridViewRow r in dataGridView1.SelectedRows)
-            //{
-                new EditRecordForm(cmbEmployee1.GetSelectedEmployee(),x[dataGridView1.SelectedRows[0].Index]).ShowDialog();
-            //}
+            var stamping = new StampingDao().SetStampingDto(this.StampingTable);
+            var selectedRow = dataGridView1.SelectedRows;
+            if(selectedRow.Count != 0)
+            {
+                var editRecordForm = new EditRecordForm(cmbEmployee1.GetSelectedEmployee(),stamping[dataGridView1.SelectedRows[0].Index]);
+                if (System.Windows.Forms.DialogResult.OK == editRecordForm.ShowDialog())
+                {
+                    this.SetGredView();
+                }
+            }
+            else
+            {
+                MessageBox.Show("打刻レコードが選択できていません。");
+            }
         }
     }
 }

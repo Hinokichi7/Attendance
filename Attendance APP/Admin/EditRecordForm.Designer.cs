@@ -64,7 +64,7 @@
             this.AddEditRecord.TabIndex = 21;
             this.AddEditRecord.Text = "更新";
             this.AddEditRecord.UseVisualStyleBackColor = true;
-            this.AddEditRecord.Click += new System.EventHandler(this.AddEditRecord_Click);
+            this.AddEditRecord.Click += new System.EventHandler(this.UpdateRecord_Click);
             // 
             // label5
             // 

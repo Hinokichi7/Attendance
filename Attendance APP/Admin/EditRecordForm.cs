@@ -63,7 +63,7 @@ namespace Attendance_APP.Admin
         }
 
 
-        private void AddEditRecord_Click(object sender, EventArgs e)
+        private void UpdateRecord_Click(object sender, EventArgs e)
         {
             var dto = new StampingDto();
             dto.Id = this.Stamping.Id;
@@ -87,6 +87,7 @@ namespace Attendance_APP.Admin
             dto.WorkingHours = new WorkingHours().GetWorkingHours(startTime, endTime);
             dto.Remark = remark.Text;
             new StampingDao().UpdateEditRecord(dto);
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();
         }
     }
