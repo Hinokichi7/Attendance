@@ -9,7 +9,7 @@ namespace Attendance_APP.Admin
     public partial class EditRecord : Form
     {
         DataTable StampingTable { get; set; }
-        //EmployeeDto Employee { get; set; }
+        DataGridViewSelectedRowCollection SelectedRows { get; set; }
         public EditRecord()
         {
             InitializeComponent();
@@ -47,10 +47,10 @@ namespace Attendance_APP.Admin
         private void edit_Click_1(object sender, EventArgs e)
         {
             var stamping = new StampingDao().SetStampingDto(this.StampingTable);
-            var selectedRow = dataGridView1.SelectedRows;
-            if(selectedRow.Count != 0)
+            this.SelectedRows = dataGridView1.SelectedRows;
+            if(this.SelectedRows.Count == 1)
             {
-                var editRecordForm = new EditRecordForm(cmbEmployee1.GetSelectedEmployee(),stamping[dataGridView1.SelectedRows[0].Index]);
+                var editRecordForm = new EditRecordForm(cmbEmployee1.GetSelectedEmployee(),stamping[this.SelectedRows[0].Index]);
                 if (System.Windows.Forms.DialogResult.OK == editRecordForm.ShowDialog())
                 {
                     this.SetGredView();
@@ -58,7 +58,21 @@ namespace Attendance_APP.Admin
             }
             else
             {
-                MessageBox.Show("打刻レコードが選択できていません。");
+                MessageBox.Show("編集する打刻レコードを1行選択してください。");
+            }
+        }
+
+        private void delete_Click(object sender, EventArgs e)
+        {
+            var stamping = new StampingDao().SetStampingDto(this.StampingTable);
+            this.SelectedRows = dataGridView1.SelectedRows;
+            if (this.SelectedRows.Count != 0)
+            {
+             for(var i = 0; i < this.SelectedRows.Count; i++)
+            {
+                new StampingDao().DeleteRecord(stamping[this.SelectedRows[i].Index]);
+            }
+                this.SetGredView();
             }
         }
     }

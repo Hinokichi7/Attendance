@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace Attendance_APP.Dao
 {
@@ -182,6 +183,24 @@ namespace Attendance_APP.Dao
             }
         }
 
+
+        public DataTable GetAllStamping(int employeeCode, string startPoint, string endPoint)
+        {
+            // 社員を指定して最新の打刻データを読み込み
+            var dt = new DataTable();
+            using (var conn = GetConnection())
+            using (var cmd = new SqlCommand("SELECT x.id, year, month, day, FORMAT(attendance, 'HH:mm') as attendance, FORMAT(leavingWork, 'HH:mm') as leavingWork, x.stampingCode, stampingName, workingHours, remark FROM Attendance.dbo.Stamping as x, Attendance.dbo.StampingType as y WHERE x.stampingCode = y.stampingCode AND employeeCode = @employeeCode AND attendance BETWEEN @startPoint AND @endPoint", conn))
+            {
+                cmd.Parameters.AddWithValue("@employeeCode", employeeCode);
+                cmd.Parameters.AddWithValue("@startPoint", startPoint);
+                cmd.Parameters.AddWithValue("@endPoint", endPoint);
+                conn.Open();
+                var adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+                return dt;
+            }
+        }
+
         public void UpdateEditRecord(StampingDto dto)
         {
             // 更新(管理)
@@ -207,20 +226,17 @@ namespace Attendance_APP.Dao
             }
         }
 
-        public DataTable GetAllStamping(int employeeCode, string startPoint, string endPoint)
+        public void DeleteRecord(StampingDto dto)
         {
-            // 社員を指定して最新の打刻データを読み込み
-            var dt = new DataTable();
+            //MessageBox.Show(dto.Id.ToString());
             using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("SELECT x.id, year, month, day, FORMAT(attendance, 'HH:mm') as attendance, FORMAT(leavingWork, 'HH:mm') as leavingWork, x.stampingCode, stampingName, workingHours, remark FROM Attendance.dbo.Stamping as x, Attendance.dbo.StampingType as y WHERE x.stampingCode = y.stampingCode AND employeeCode = @employeeCode AND attendance BETWEEN @startPoint AND @endPoint", conn))
+            using (var cmd = new SqlCommand("DELETE FROM  Attendance.dbo.Stamping WHERE @id = id", conn))
             {
-                cmd.Parameters.AddWithValue("@employeeCode", employeeCode);
-                cmd.Parameters.AddWithValue("@startPoint", startPoint);
-                cmd.Parameters.AddWithValue("@endPoint", endPoint);
                 conn.Open();
-                var adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(dt);
-                return dt;
+
+                cmd.Parameters.AddWithValue("@id", dto.Id);
+
+                cmd.ExecuteNonQuery();
             }
         }
     }

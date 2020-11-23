@@ -151,6 +151,7 @@
             this.delete.TabIndex = 17;
             this.delete.Text = "削除";
             this.delete.UseVisualStyleBackColor = true;
+            this.delete.Click += new System.EventHandler(this.delete_Click);
             // 
             // EditRecord
             // 
