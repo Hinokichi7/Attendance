@@ -228,16 +228,19 @@ namespace Attendance_APP.Dao
 
         public void DeleteRecord(StampingDto dto)
         {
-            //MessageBox.Show(dto.Id.ToString());
-            using (var conn = GetConnection())
-            using (var cmd = new SqlCommand("DELETE FROM  Attendance.dbo.Stamping WHERE @id = id", conn))
-            {
-                conn.Open();
+            //DialogResult result = MessageBox.Show(dto.Attendance.ToString("yyyy/MM/dd") + "のレコードを削除します。", "", MessageBoxButtons.OKCancel);
+            //if (result == DialogResult.OK)
+            //{
+                using (var conn = GetConnection())
+                using (var cmd = new SqlCommand("DELETE FROM  Attendance.dbo.Stamping WHERE @id = id", conn))
+                {
+                    conn.Open();
 
-                cmd.Parameters.AddWithValue("@id", dto.Id);
+                    cmd.Parameters.AddWithValue("@id", dto.Id);
 
-                cmd.ExecuteNonQuery();
-            }
+                    cmd.ExecuteNonQuery();
+                }
+            //}
         }
     }
 }

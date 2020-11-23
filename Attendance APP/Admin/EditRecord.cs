@@ -64,15 +64,19 @@ namespace Attendance_APP.Admin
 
         private void delete_Click(object sender, EventArgs e)
         {
-            var stamping = new StampingDao().SetStampingDto(this.StampingTable);
-            this.SelectedRows = dataGridView1.SelectedRows;
-            if (this.SelectedRows.Count != 0)
+            DialogResult result = MessageBox.Show(DateTime.Now.ToString("yyyy/MM/dd") + "のレコードを削除します。", "", MessageBoxButtons.OKCancel);
+            if (result == DialogResult.OK)
             {
-             for(var i = 0; i < this.SelectedRows.Count; i++)
-            {
-                new StampingDao().DeleteRecord(stamping[this.SelectedRows[i].Index]);
-            }
-                this.SetGredView();
+                var stamping = new StampingDao().SetStampingDto(this.StampingTable);
+                this.SelectedRows = dataGridView1.SelectedRows;
+                if (this.SelectedRows.Count != 0)
+                {
+                    for (var i = 0; i < this.SelectedRows.Count; i++)
+                    {
+                        new StampingDao().DeleteRecord(stamping[this.SelectedRows[i].Index]);
+                    }
+                    this.SetGredView();
+                }
             }
         }
     }
