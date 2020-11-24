@@ -1,6 +1,7 @@
 ﻿using Attendance_APP.Dao;
 using Attendance_APP.Dto;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 
@@ -43,7 +44,6 @@ namespace Attendance_APP.Admin
             this.SetGredView();
         }
 
-
         private void edit_Click_1(object sender, EventArgs e)
         {
             var stamping = new StampingDao().SetStampingDto(this.StampingTable);
@@ -64,20 +64,31 @@ namespace Attendance_APP.Admin
 
         private void delete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(DateTime.Now.ToString("yyyy/MM/dd") + "のレコードを削除します。", "", MessageBoxButtons.OKCancel);
-            if (result == DialogResult.OK)
+
+            var stamping = new StampingDao().SetStampingDto(this.StampingTable);
+            this.SelectedRows = dataGridView1.SelectedRows;
+            var stampings = new List<StampingDto>();
+            if (this.SelectedRows.Count != 0)
             {
-                var stamping = new StampingDao().SetStampingDto(this.StampingTable);
-                this.SelectedRows = dataGridView1.SelectedRows;
-                if (this.SelectedRows.Count != 0)
+                for (var i = 0; i < this.SelectedRows.Count; i++)
                 {
-                    for (var i = 0; i < this.SelectedRows.Count; i++)
-                    {
-                        new StampingDao().DeleteRecord(stamping[this.SelectedRows[i].Index]);
-                    }
-                    this.SetGredView();
+                    var selectedStamping = stamping[this.SelectedRows[i].Index];
+                    stampings.Add(selectedStamping);
+
                 }
+                    DialogResult result = MessageBox.Show(selectedStampings.Attendance.ToString("yyyy/MM/dd") + "のレコードを削除します。", "", MessageBoxButtons.OKCancel);
+                    if (result == DialogResult.OK)
+                    {
+                        new StampingDao().DeleteRecord(selectedStamping);
+                    }
+                //foreach (var row in this.SelectedRows)
+                //{
+                //    Console.WriteLine(row);
+                //}
+                //this.SetGredView();
             }
+
+
         }
     }
 }
