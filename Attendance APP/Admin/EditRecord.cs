@@ -28,6 +28,9 @@ namespace Attendance_APP.Admin
             {
                 this.StampingTable = new StampingDao().GetAllStamping(employee.Code, startPoint, endPoint);
                 dataGridView1.DataSource = this.StampingTable;
+                dataGridView1.Columns[4].DefaultCellStyle.Format = "HH:mm";
+                dataGridView1.Columns[5].DefaultCellStyle.Format = "HH:mm";
+
                 if (dataGridView1.Rows.Count == 0)
                 {
                     MessageBox.Show("打刻データがありません。");
@@ -67,25 +70,26 @@ namespace Attendance_APP.Admin
 
             var stamping = new StampingDao().SetStampingDto(this.StampingTable);
             this.SelectedRows = dataGridView1.SelectedRows;
-            var stampings = new List<StampingDto>();
+            string message = "";
+            StampingDto selectedStamping = null;
             if (this.SelectedRows.Count != 0)
             {
                 for (var i = 0; i < this.SelectedRows.Count; i++)
                 {
-                    var selectedStamping = stamping[this.SelectedRows[i].Index];
-                    stampings.Add(selectedStamping);
-
+                    selectedStamping = stamping[this.SelectedRows[i].Index];
+                    message += "\n" + selectedStamping.Attendance.ToString("yyyy/MM/dd");
                 }
-                    DialogResult result = MessageBox.Show(selectedStampings.Attendance.ToString("yyyy/MM/dd") + "のレコードを削除します。", "", MessageBoxButtons.OKCancel);
-                    if (result == DialogResult.OK)
+
+                DialogResult result = MessageBox.Show(message + "のレコードを削除します。", "", MessageBoxButtons.OKCancel);
+                if (result == DialogResult.OK)
+                {
+                    for (var i = 0; i < this.SelectedRows.Count; i++)
                     {
+                        selectedStamping = stamping[this.SelectedRows[i].Index];
                         new StampingDao().DeleteRecord(selectedStamping);
                     }
-                //foreach (var row in this.SelectedRows)
-                //{
-                //    Console.WriteLine(row);
-                //}
-                //this.SetGredView();
+                }
+                this.SetGredView();
             }
 
 
