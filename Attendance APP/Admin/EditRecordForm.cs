@@ -65,30 +65,31 @@ namespace Attendance_APP.Admin
 
         private void UpdateRecord_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("○○を更新します、よろしいですか？", "", MessageBoxButtons.OKCancel);
+            var dto = new StampingDto();
+            dto.Id = this.Stamping.Id;
+            dto.EmployeeCode = this.employee.Code;
+            dto.UpdateTime = DateTime.Now;
+            dto.Year = cmbDate1.GetSelectedValue().year;
+            dto.Month = cmbDate1.GetSelectedValue().month;
+            dto.Day = cmbDate1.GetSelectedValue().day;
+
+            var startHour = (int)cmb_startHour.SelectedItem;
+            var startMinute = (int)cmb_startMinut.SelectedItem;
+            var endHour = (int)cmb_endHour.SelectedItem;
+            var endMinute = (int)cmb_endMinut.SelectedItem;
+            dto.Attendance = this.GetStampingTime(startHour, startMinute);
+            dto.LeavingWork = this.GetStampingTime(endHour, endMinute);
+            dto.StampingCode = cmbStampingType1.GetSelectedStampingType().StampingCode;
+            // 出勤時間、退勤時間を取得(丸め無し)
+            var startTime = new WorkingHours().GetStartTime(this.GetStampingTime(startHour, startMinute));
+            var endTime = new WorkingHours().GetEndTime(this.GetStampingTime(endHour, endMinute));
+            // 労働時間
+            dto.WorkingHours = new WorkingHours().GetWorkingHours(startTime, endTime);
+            dto.Remark = remark.Text;
+
+            DialogResult result = MessageBox.Show(dto.Attendance.ToString("yyyy/MM/dd") + "のレコードをを更新します、よろしいですか？", "", MessageBoxButtons.OKCancel);
             if (result == DialogResult.OK)
             {
-                var dto = new StampingDto();
-                dto.Id = this.Stamping.Id;
-                dto.EmployeeCode = this.employee.Code;
-                dto.UpdateTime = DateTime.Now;
-                dto.Year = cmbDate1.GetSelectedValue().year;
-                dto.Month = cmbDate1.GetSelectedValue().month;
-                dto.Day = cmbDate1.GetSelectedValue().day;
-
-                var startHour = (int)cmb_startHour.SelectedItem;
-                var startMinute = (int)cmb_startMinut.SelectedItem;
-                var endHour = (int)cmb_endHour.SelectedItem;
-                var endMinute = (int)cmb_endMinut.SelectedItem;
-                dto.Attendance = this.GetStampingTime(startHour, startMinute);
-                dto.LeavingWork = this.GetStampingTime(endHour, endMinute);
-                dto.StampingCode = cmbStampingType1.GetSelectedStampingType().StampingCode;
-                // 出勤時間、退勤時間を取得(丸め無し)
-                var startTime = new WorkingHours().GetStartTime(this.GetStampingTime(startHour, startMinute));
-                var endTime = new WorkingHours().GetEndTime(this.GetStampingTime(endHour, endMinute));
-                // 労働時間
-                dto.WorkingHours = new WorkingHours().GetWorkingHours(startTime, endTime);
-                dto.Remark = remark.Text;
                 new StampingDao().UpdateEditRecord(dto);
                 this.DialogResult = System.Windows.Forms.DialogResult.OK;
                 this.Close();
